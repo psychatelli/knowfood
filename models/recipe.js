@@ -3,21 +3,21 @@ const Schema = mongoose.Schema;
 
 //User Schema
 const RecipeSchema = new Schema({
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
+      thumbnail: {
+        type: String,
+        required: true
       },
       title: {
         type: String,
         required: true
       },
+      ingredients: {
+        type: String
+      },
       username: {
         type: String
       },
       avatar: {
-        type: String
-      },
-      ingredients: {
         type: String
       },
       date: {
@@ -31,7 +31,6 @@ const RecipeSchema = new Schema({
             },
             text: {
                 type: String,
-                required: true
             }, 
         }
       ],
@@ -58,6 +57,5 @@ const RecipeSchema = new Schema({
       ]  
 })
 
-const Recipe = module.exports = mongoose.model('User', RecipeSchema);
 
-
+module.exports = Recipe = mongoose.model('recipe', RecipeSchema);

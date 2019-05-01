@@ -8,10 +8,12 @@ const path = require('path');
 const config = require('./config/config');
 
 const users = require('./routes/user');
+const recipes = require('./routes/recipe');
 
 
+mongoose.connect(global.gConfig.database, { useNewUrlParser: true });
 
-mongoose.connect(global.gConfig.database);
+// mongoose.connect(global.gConfig.database);
 let db = mongoose.connection;
 
 //Check connection
@@ -31,14 +33,16 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-
+ 
 //Home Route
 app.get('/api', (req, res) => {
     res.send('Hello World!')
  });
 
 
+
 app.use('/api/users', users);
+app.use('/api/recipe', recipes);
 
 
 // config variables
