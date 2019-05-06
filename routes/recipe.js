@@ -5,6 +5,7 @@ const router = express.Router();
 
 const Recipe = require('../models/recipe');
 
+const validateRecipeInput = require('../validation/recipe');
 
 
 
@@ -33,11 +34,12 @@ router.get('/:id', (req,res) => {
 
 
 
-// @route POST api/recipe
+ // @route POST api/recipe
 // @route Post a recipe
 // @route Public
 
 router.post('/', (req, res) => {
+    
     const newRecipe = new Recipe({
         thumbnail: req.body.thumbnail,
         title: req.body.title,
@@ -48,8 +50,8 @@ router.post('/', (req, res) => {
 
     newRecipe.save().then(recipe => res.json(recipe))
     .catch(err => res.status(404).json( {noRecipeFound: 'Could not add recipe'} ));
-
 });
+
 
  
 
@@ -73,23 +75,66 @@ router.delete('/:id', (req, res) => {
 // @route Get all recipe 
 // @route Public
 
-router.post('/step/:id', (req, res) => {
+router.post('/step/:recipe_id', (req, res) => {
 
-    Recipe.findById(req.params.id)
+    // const { errors, isValid } = validateRecipeInput(req.body);
+    //  if(!isValid) {
+    //     return res.status(400).json(errors);
+    // }
+
+    Recipe.findById(req.params.recipe_id)
     .then(recipe => {
         const newStep = {
             thumbnail: req.body.thumbnail,  
-            text: req.body.text,
+            text: req.body.text
         }
 
         //Add step to array
-        recipe.step.unshift(newStep);
-
-        //save
-        recipe.save().then(recipe => res.json(recipe));
+        recipe.step.unshift(newStep)
+        recipe.save().then(recipe => res.json(recipe.step))
     })
-    .catch(err => res.status(404).json({ postnotfound: 'No post found'} ));
+    .catch(err => res.status(404).json( {noRecipeFound: 'Could not add STEP'} ));
 });
+
+
+
+
+// @route   DELETE api/recipe/step/:id/:comment_id
+// @desc    Remove comment from post
+// @access  Private
+router.delete('/step/:recipe_id/:step_id',(req, res) => {
+      Recipe.findById(req.params.recipe_id)
+
+        .then(recipe => {
+          // Check to see if comment exists
+
+          if (
+            recipe.step.filter(
+              step => step._id.toString() === req.params.step_id
+            ).length === 0
+          ) {
+            return res
+              .status(404)
+              .json({ Stepnotexists: 'Step does not exist' });
+          }
+  
+          // Get remove index
+          const removeIndex = recipe.step
+            .map(item => item._id.toString())
+            .indexOf(req.params.step_id);
+  
+          // Splice comment out of array
+          recipe.step.splice(removeIndex, 1);
+  
+          recipe.save().then(recipe => res.json(recipe));
+        })
+        .catch(err => res.status(404).json({ stepnotfound: 'No post found' }));
+    }
+  );
+
+
+
+    
 
 
 

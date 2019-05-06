@@ -1,0 +1,78 @@
+
+
+.Grid_wrapper {
+    display: flex;
+    max-width: 1200px;
+    margin: 0px auto;
+}
+
+
+
+// 3 Column Grid Pages START
+.Grid_3Col {
+    display: grid;
+     grid-template-columns: 250px minmax(300px, 500px) minmax(250px, 450px);
+    grid-column-gap: 10px;
+}
+
+
+.Grid_3Col .Column:nth-child(3) {
+      height: 100vh;
+      overflow: scroll;
+      position: sticky;
+      top: 60px;  
+   
+}
+
+.Grid_3Col_1FullSpan .Column:nth-child(1) {
+}
+
+// 3 Column Grid Pages END
+
+
+
+// 2 Column Grid Pages START
+
+.Grid_2Col {
+    display: grid;
+     grid-template-columns: 250px minmax(550px, 950px) ;
+    grid-column-gap: 10px;
+
+}
+
+.Column1 {
+
+}
+.Column2 {
+    margin-right: 20px;
+
+}
+
+
+
+.Grid_2Col_Container {
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: minmax(300px, 500px) minmax(250px, 450px);
+}
+
+
+
+.Grid_2Col_Container .Column:nth-child(2) {
+    height: 90vh;
+    overflow: scroll;
+    position: sticky;
+    top: 60px;     
+    margin-top: 10px;
+}
+
+.Grid_2Col .Column:nth-child(2) {
+
+}
+
+// 3 Column Grid Pages END
+
+
+.Grid_2Col_Modified {
+    
+}
