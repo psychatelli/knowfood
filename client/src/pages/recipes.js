@@ -13,6 +13,7 @@ export class Recipes extends Component {
 
   render() {
     const { recipes } = this.props;
+    
     const Recipes = recipes.map(item => (
       <div>
         <h3> {item.title} </h3>

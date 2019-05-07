@@ -14,7 +14,7 @@ class App extends Component {
       <Provider store={store}> 
         <Router>
           <div>
-            <Nav/>
+            {/* <Nav/> */}
               <div className="Wrapper"> 
               <Switch> 
               <Route exact path="/" component={Home} />

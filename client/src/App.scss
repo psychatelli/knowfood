@@ -4,10 +4,12 @@
 @import "../scss/leftnav";
 
 @import '../scss/rightNav';
+@import '../scss/recipeitems';
+
 
 body {
     overflow-x: hidden;
-    background: #353434;
+    // background: #353434;
     // background: url(./img/body_background.jpg) no-repeat center center fixed;
     // -webkit-background-size: cover;
     // -moz-background-size: cover;
@@ -42,7 +44,7 @@ h3 {
 .Wrapper {
     width: 100%;
     margin: 5px;
-    background: rgba(230, 229, 229, 0.486);
+    // background: rgba(230, 229, 229, 0.486);
 }
 
 .brand-logo {
@@ -60,8 +62,11 @@ h3 {
     border: solid thin rgb(224, 224, 224);
     @extend .Shadow;
     margin: 10px 0px 10px 0px;
-    @extend .light_gray;
+    background: white;
+    border-radius: 10px;
 }
+
+
 
 
 .LeftCol {
@@ -82,7 +87,7 @@ h3 {
     right: 0px!important;
   }
 
-  .spacebetween {
+  .SpaceBetween {
       display: flex;
       justify-content: space-between
   }

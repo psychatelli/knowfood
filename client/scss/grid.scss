@@ -1,7 +1,8 @@
 
 
 .Grid_wrapper {
-    display: flex;
+    display: grid;
+    justify-content: center;
     max-width: 1200px;
     margin: 0px auto;
 }

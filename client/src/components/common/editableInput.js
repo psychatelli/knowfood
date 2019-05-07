@@ -26,8 +26,8 @@ export default class EditableInput extends Component {
         this.state = {
           editing: false,
           submitting: false,
-          // draftText: this.props.description,
-          // text: this.props.description,
+          // draftText: this.props.value,
+          // text: this.props.value,
           error: false,
         }
     
@@ -55,10 +55,12 @@ export default class EditableInput extends Component {
         }
         
         handleClickOutside = (e) => {
+          e.preventDefault();
+
           if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-              this.toggleEditing();
+              this.toggleEditing(e);
           }
-      }
+        }
 
 
         toggleEditing = (e) => {
@@ -76,7 +78,6 @@ export default class EditableInput extends Component {
     
         handleChange = (e) => {
             this.setState({draftText: e.target.value});
-    
         }
     
       // actually submit the request etc.
@@ -115,24 +116,22 @@ export default class EditableInput extends Component {
         error = <span className="error">error!</span>
       }
 
-
+ 
 
       if (this.state.editing) {
         textOrInput = <div>
         <TextField
-          onChange={this.handleChange}
+          // onChange={this.handleChange}
+          onChange={this.props.HandleChange}
           onKeyDown={this.handleKeyDown}
-          value={this.props.description}
+          value={this.props.value}
           margin="normal"
           fullWidth
           multiline
           variant="outlined"
-
+          name={this.props.name}
         />
         </div>
-
-                       
-  
         controlLinks = (
           <div>
             <a className="edit-link blue-link" onClick={this.handleCancel} href="#">CANCEL</a>
@@ -141,7 +140,7 @@ export default class EditableInput extends Component {
   
         editing = 'editing';
       } else {
-        textOrInput = <span onClick={this.toggleEditing} className="text">{this.props.description}</span>
+        textOrInput = <span onClick={this.toggleEditing} className="text">{this.props.value}</span>
         controlLinks = <div><a className="edit-link blue-link" onClick={this.toggleEditing} href="#">EDIT</a></div>
         editing = '';
       }

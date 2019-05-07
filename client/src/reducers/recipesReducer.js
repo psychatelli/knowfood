@@ -16,6 +16,18 @@ const initialState = {
             items: action.payload,
         };
 
+        case ADD_RECIPE:
+        return {
+          ...state,
+          items: [action.payload, ...state.items]
+        };
+
+        case DELETE_RECIPE:
+        return {
+          ...state,
+          items: state.items.filter(recipe => recipe._id !== action.payload)
+        };
+
         // case GET_RECIPE:
         // return{
         //     ...state,

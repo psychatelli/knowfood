@@ -5,11 +5,9 @@ const Schema = mongoose.Schema;
 const RecipeSchema = new Schema({
       thumbnail: {
         type: String,
-        required: true
       },
       title: {
         type: String,
-        required: true
       },
       ingredients: {
         type: String
@@ -28,12 +26,9 @@ const RecipeSchema = new Schema({
         {
             thumbnail: {
                 type: String,
-                required: true
             },
             text: {
                 type: String,
-                required: true
-
             } 
         }
       ],

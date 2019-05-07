@@ -35,10 +35,11 @@ class Menu_dropdown extends React.Component {
       showDetails = () => {
           let Post = this.props.post
           console.log(Post.name, Post.img)
-        }
+        };
 
         render() {
             const { anchorEl } = this.state;
+            const {deleteItem} = this.props;
 
 
         return (
@@ -54,7 +55,7 @@ class Menu_dropdown extends React.Component {
                         <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree">Share</Link>  </MenuItem>
                         <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree/grandparents">Edit</Link>  </MenuItem>
                         <MenuItem  selected={2 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree/familyHub">Hide From Timeline</Link>  </MenuItem>
-                        <MenuItem  selected={3 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree/familyHub">Delete</Link>  </MenuItem>
+                        <MenuItem  selected={3 === this.state.selectedIndex} onClick={deleteItem}> Delete </MenuItem>
                     </Menu>
                 </div>
         </div>

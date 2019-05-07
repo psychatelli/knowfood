@@ -6525,7 +6525,8 @@ input[type=range]::-ms-thumb {
     margin-top: 1.2rem; } }
 
 .Grid_wrapper {
-  display: flex;
+  display: grid;
+  justify-content: center;
   max-width: 1200px;
   margin: 0px auto; }
 
@@ -6563,7 +6564,7 @@ input[type=range]::-ms-thumb {
 .lightest_gray {
   background: #f4f4f4; }
 
-.light_gray, .Card {
+.light_gray {
   background: #fcfafac9; }
 
 .light_gray_border {
@@ -6644,9 +6645,13 @@ input[type=range]::-ms-thumb {
   transition: all .25s ease;
   height: 100vh; }
 
+.RecipeCard h5 {
+  color: #5c5c5c;
+  text-transform: uppercase;
+  font-size: 15px; }
+
 body {
-  overflow-x: hidden;
-  background: #353434; }
+  overflow-x: hidden; }
 
 .Shadow, .Card {
   -webkit-box-shadow: 1px 1px 13px 0px #a399a3;
@@ -6667,8 +6672,7 @@ h3 {
 
 .Wrapper {
   width: 100%;
-  margin: 5px;
-  background: rgba(230, 229, 229, 0.486); }
+  margin: 5px; }
 
 .brand-logo {
   margin-left: 10px; }
@@ -6679,7 +6683,9 @@ h3 {
 .Card {
   padding: 10px;
   border: solid thin #e0e0e0;
-  margin: 10px 0px 10px 0px; }
+  margin: 10px 0px 10px 0px;
+  background: white;
+  border-radius: 10px; }
 
 .LeftCol {
   width: 400px; }
@@ -6696,7 +6702,7 @@ h3 {
   top: 70px !important;
   right: 0px !important; }
 
-.spacebetween {
+.SpaceBetween {
   display: flex;
   justify-content: space-between; }
 
