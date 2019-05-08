@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP } from './types';
+import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE } from './types';
 
 const data = [
     {
@@ -30,6 +30,7 @@ export const getRecipes = () => dispatch => {
           payload: res.data
         })
       )
+
       
   };
 
@@ -72,5 +73,26 @@ export const deleteRecipe = id => dispatch => {
     //     payload: err.response.data
     //   })
     // );
-    
+
+};
+   
+  
+// Update Recipe
+export const updateRecipe = (recipeId, recipeData ) => dispatch => {
+  axios
+    .put(`/api/recipe/${recipeId}`, recipeData)
+    .then(res =>
+      dispatch({
+        type: UPDATE_RECIPE,
+        payload: res.data
+        
+      })
+    )
+
+    // .catch(err =>
+    //   dispatch({
+    //     type: GET_ERRORS,
+    //     payload: err.response.data
+    //   })
+    // );
 };

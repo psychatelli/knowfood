@@ -53,7 +53,31 @@ router.post('/', (req, res) => {
 });
 
 
+
+
+
+
+
+// @route   POST api/recipe/:id
+// @desc    Update Recipe
+// @access  Private
+router.put('/:id',  (req, res) => {
  
+  Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, recipe) => {
+    if (err) return res.status(500).send(err);
+    return res.send(recipe);
+    
+    }
+)
+
+  });
+
+
+ 
+
+
+
+
 
 
 // @route DELETE api/recipe/:id

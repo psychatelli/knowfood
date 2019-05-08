@@ -1,6 +1,7 @@
 
 export const GET_RECIPES = 'GET_RECIPES'
 export const DELETE_RECIPES = 'DELETE_RECIPES'
+export const UPDATE_RECIPE = 'UPDATE_RECIPE'
 
 export const ADD_RECIPE = 'ADD_RECIPE'
 export const GET_RECIPE = 'GET_RECIPE'
