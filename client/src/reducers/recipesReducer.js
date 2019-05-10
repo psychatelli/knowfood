@@ -17,51 +17,33 @@ const initialState = {
         };
 
         case ADD_RECIPE:
+        console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
+
         return {
-          ...state,
-          items: [action.payload, ...state.items]
+           ...state,
+             items: [action.payload, ...state.items],
         };
 
         case DELETE_RECIPE:
+
         return {
-          ...state,
-          items: state.items.filter(recipe => recipe._id !== action.payload)
+           ...state,
+          items: state.items.filter(recipe => recipe._id !== action.payload),
         };
 
         case UPDATE_RECIPE:
+        console.log(`RECUDER ${JSON.stringify(state)}`); 
+
         return {
-          ...state,
-          items: [action.payload, ...state.items]
+           ...state,
+          items: state.items.filter(recipe => recipe._id !== action.payload)
         };
-
-       
-
-        // case GET_RECIPE:
-        // return{
-        //     ...state,
-        //     item: action.payload,
-        //     loading: false
-        // };
-
-        // case DELETE_RECIPE:
-        // return{
-        //     ...state,
-        //     items: state.items.filter(item => item._id !== action.payload)
-        // };
-
-        // case POST_STEP:
-        // return{
-        //     ...state,
-        //     items: state.items.filter(item => item._id !== action.payload)
-        // };
-
-        // case DELETE_STEP:
-        // return{
-        //     ...state,
-        //     items: state.items.filter(item => item._id !== action.payload)
-        // };
+     
 
         default:
         return state;
       }
   }
+
+
+  

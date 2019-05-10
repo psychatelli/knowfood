@@ -5,9 +5,12 @@ const Schema = mongoose.Schema;
 const RecipeSchema = new Schema({
       thumbnail: {
         type: String,
+        default: 'Add Thumbnail'
       },
       title: {
         type: String,
+        default: 'Add Title'
+
       },
       ingredients: {
         type: String

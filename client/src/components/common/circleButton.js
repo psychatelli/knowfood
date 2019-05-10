@@ -17,10 +17,10 @@ const styles = theme => ({
 });
 
 function CircleButton(props) {
-  const { classes, color, icon, size, onclick, type  } = props;
+  const { classes, color, icon, size, onclick, type, Click  } = props;
   return (
     <div>
-      <Fab type={type} color={color} size={size} className={classes.fab} onClick={onclick}>
+      <Fab type={type} color={color} size={size} className={classes.fab} onClick={Click}>
       <i className="material-icons">{icon}</i>
       </Fab>
      

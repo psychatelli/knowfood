@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getRecipes, addRecipe, deleteRecipe, updateRecipe } from '../actions/recipes';
+import { getRecipes, addRecipe, deleteRecipe, updateRecipe } from '../actions/recipesAction';
 import CircleButton from '../components/common/circleButton';
 import Menu_dropdown from '../components/common/menu_dropdown';
 import EditableInput from '../components/common/editableInput';
+import NewRecipePost from '../components/NewRecipePost/newRecipePost';
+import DrawerRight from '../components/common/drawerright';
+import Button from '@material-ui/core/Button';
+
+
 
 export class Home extends Component {
 
@@ -13,124 +18,130 @@ export class Home extends Component {
         this.state = {
           _id: '',
           title: '',
-          thumbnail: '',
-          titleEdited: '',
+          thumbnail: 'AddThumbnail',
+          titleEdited: 'a',
           thumbnaileEdited: '',
           indexEdited: '',
-          errors: {}
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this)
-        this.updateRecipe = this.updateRecipe.bind(this)
+          errors: {},
+          active: true,
 
+
+        }
+        // this.handleChange = this.handleChange.bind(this);
+        this.updateRecipe = this.updateRecipe.bind(this)
     }
 
+   
 
 
       componentWillMount() {
         this.props.getRecipes();
+        console.log('Component will mount')
       }
 
+     
+     
+     
+      onDeleteClick(id) {
+        this.props.deleteRecipe(id);
 
+      }
+  
+    
    
-
-    onDeleteClick(id) {
-      this.props.deleteRecipe(id);
-    }
-
-    onSubmit(e) {
-      e.preventDefault();
-      // const { user } = .props.auth;
-      const newRecipe = {
-        title: this.state.title,
-        thumbnail: this.state.thumbnail
-        // name: user.name,
-        // avatar: user.avatar
-      }
-        this.props.addRecipe(newRecipe);
-        // this.setState({ text: ''});
-    }
-
-
-       updateRecipe() {
-
+      updateRecipe() {
         let newRecipe = {
-          thumbnail: 'https://photos.smugmug.com/Test/i-MkMvn4H/0/31787075/S/worker-S.jpg',
-          title: "Mazarelas11"
+           title: this.state.titleEdited
         }
+            // console.log(`your updateRecipe ${this.state.indexEdited} ${this.state.thumbnaileEdited} ${this.state.titleEdited}`)
+            this.props.updateRecipe(this.state.indexEdited, newRecipe)
 
-        // console.log(this.state.indexEdited)
-         console.log(`your newRecipe ${newRecipe}`)
-        this.props.updateRecipe(this.state.indexEdited, newRecipe)
-
-
-       }
-
-
-        handleChange = input => evt => {
-          this.setState({
-            [input.title]: evt.target.value,
-            thumbnaileEdited: input.thumbnail,
-            titleEdited: input.title,
-            indexEdited: input._id
-          })
+            this.setState({ 
+              tindexEdited : '',
+              thumbnaileEdited : '',
+              titleEdited : ''
+             });
+          }
 
           
+      // handleChange = input => evt => {
+      //   this.setState({
+      //     // [input]: evt.target.value,
+      //     // thumbnaileEdited: input.thumbnail,
+      //     titleEdited: evt.target.value,
+      //     indexEdited: input._id
+      //     })
+      //   } 
 
-          // console.log(`${this.state.indexEdited}, ${this.state.titleEdited}`)
-
-
-      } 
-
-      // handleChange (id, event) {
-      //   let label = event.target.value
-      //   this.props.updateRecipe(index, label)
-      //   console.log(id)
-      // }
+      // handleChange = e => {
+      //   this.setState({
+      //     title: e.target.value
+      //     })
+      //   }
+  
+       
+        
+      editRow = (recipe) =>{
+        this.setState({
+           _id: recipe.id,
+           thumbnaileEdited: recipe.thumbnail,
+           titleEdited: recipe.title,
+        })
+    }
+        
 
   render() {
     const { recipes } = this.props;
     
-    
+    const NotesIcon = (
+      <Button><i title="Notes" className="material-icons">note</i> Notes</Button>
+  )
 
     const Recipes = recipes.map((item) => (
       <div className='Card RecipeCard'>
          <div className='SpaceBetween'>
-            <div>         
-              <h5> 
-              {/* <EditableInput 
-              HandleChange={this.handleChange(item._id)} 
-              value={item.title} 
-              name='title'
-              />   */}
-              <input placeholder='Insert Title...' defaultValue={item.title} name={item.id} onChange={this.handleChange(item)} onBlur={this.updateRecipe}  />
-              </h5>
-            </div>
+              <div>         
+                {/* <EditableInput 
+                HandleChange={this.handleChange(item._id)} 
+                value={item.title} 
+                name='title'
+                />   */}
+                {/* <input placeholder='Insert Title...' value={item.title} name={item.id} onChange={this.handleChange(item)} onBlur={this.updateRecipe}  /> */}
+                <h5> {item.title} </h5>
+              </div>
 
-            <div> 
-              <Menu_dropdown deleteItem={this.onDeleteClick.bind(this, item._id)} />
-            </div>
-      </div>
-
+              <div> 
+                <Menu_dropdown title='' deleteItem={this.onDeleteClick.bind(this, item._id)} editContent={this.editRow.bind(this, item)}/>
+              </div>
+          </div>
+              {/* <h6>{item.thumbnail}</h6> */}
          <img src={item.thumbnail} />
       </div>
     ))
 
-    console.log(recipes)
 
     return (
       <div className='Grid_wrapper'>
-        <form onSubmit={this.onSubmit}>
         <div className='SpaceBetween'>
-            <div>  </div>
+            <div> <h4>{this.state.titleEdited} </h4> </div>
 
             <div> 
-              <CircleButton type="submit" color='primary' size='small' icon='add' onClick={this.onSubmit} /> 
+              <CircleButton color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
+              
             </div>
         </div>
        
+          <NewRecipePost  ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
+       
+      
         {Recipes}
-        </form> 
+
+       {NotesIcon}
+       
+        <DrawerRight buttonContent={NotesIcon}>
+            <h5>Edit Recipe</h5>
+        <h5>{this.state.titleEdited}</h5>
+        </DrawerRight>
       </div>
 
      
@@ -143,5 +154,5 @@ const mapStateToProps = state => ({
   recipes: state.recipes.items,
 })
 
-export default connect(mapStateToProps, {getRecipes, addRecipe, deleteRecipe, updateRecipe})(Home)
+export default connect(mapStateToProps, {getRecipes, deleteRecipe, updateRecipe})(Home)
 // export default Home

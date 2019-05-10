@@ -6706,6 +6706,12 @@ h3 {
   display: flex;
   justify-content: space-between; }
 
+.HideInput {
+  display: none; }
+
+.ShowInput {
+  display: inline; }
+
 .imgUploadBtn {
   display: flex;
   justify-content: center;

@@ -30,20 +30,32 @@ class Menu_dropdown extends React.Component {
     
       handleClose = () => {
         this.setState({ anchorEl: null });
+
+         
       };
+
+      DeleteItem = () => {
+        this.setState({ anchorEl: null });
+        this.props.deleteItem()
+      }
 
       showDetails = () => {
           let Post = this.props.post
           console.log(Post.name, Post.img)
         };
 
+
+        Edit = () => {
+          this.props.editContent()
+          this.handleClose()
+        }
+ 
         render() {
             const { anchorEl } = this.state;
-            const {deleteItem} = this.props;
+            const {deleteItem, editContent, title} = this.props;
 
-
+ 
         return (
-        <div> 
                 <div> 
                     <List>
                         <i class="material-icons">favorite_border</i> 
@@ -51,14 +63,13 @@ class Menu_dropdown extends React.Component {
                         <i className="material-icons">more_horiz</i></a>
                     </List>
  
-                    <Menu  id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
+                    <Menu title={title} id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
                         <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree">Share</Link>  </MenuItem>
-                        <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree/grandparents">Edit</Link>  </MenuItem>
+                        <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.Edit}> Edit </MenuItem>
                         <MenuItem  selected={2 === this.state.selectedIndex} onClick={this.handleClose}> <Link to="/tree/familyHub">Hide From Timeline</Link>  </MenuItem>
-                        <MenuItem  selected={3 === this.state.selectedIndex} onClick={deleteItem}> Delete </MenuItem>
+                        <MenuItem  selected={3 === this.state.selectedIndex} onClick={this.DeleteItem}> Delete </MenuItem>
                     </Menu>
                 </div>
-        </div>
     );
   }
 }

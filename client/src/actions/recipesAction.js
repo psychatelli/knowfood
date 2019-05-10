@@ -40,13 +40,14 @@ export const getRecipes = () => dispatch => {
   // Add Post
 export const addRecipe = recipeData => dispatch => {
   // dispatch(clearErrors());
+  // console.log(`AddREcipe: ${JSON.stringify(recipeData)}`)
   axios
     .post('/api/recipe', recipeData)
     .then(res =>
       dispatch({
         type: ADD_RECIPE,
         payload: res.data
-      })
+      }),
     )
     // .catch(err =>
     //   dispatch({
@@ -85,9 +86,11 @@ export const updateRecipe = (recipeId, recipeData ) => dispatch => {
       dispatch({
         type: UPDATE_RECIPE,
         payload: res.data
-        
       })
+      
     )
+
+  
 
     // .catch(err =>
     //   dispatch({

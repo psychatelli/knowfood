@@ -92,6 +92,13 @@ h3 {
       justify-content: space-between
   }
 
+  .HideInput {
+    display: none;
+  }
+  .ShowInput {
+    display: inline;
+  }
+
 .imgUploadBtn {
     
     display: flex;
