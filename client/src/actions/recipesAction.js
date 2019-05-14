@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE } from './types';
+import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE } from './types';
 
 const data = [
     {
@@ -99,3 +99,16 @@ export const updateRecipe = (recipeId, recipeData ) => dispatch => {
     //   })
     // );
 };
+
+
+
+  // Add Post
+  export const selectedRecipe = recipeData => dispatch => {
+    console.log(recipeData)
+    dispatch({
+      type: SELECTED_RECIPE,
+      payload: recipeData
+    })
+      
+    
+  };

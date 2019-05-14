@@ -37,33 +37,30 @@ class DrawerRight extends React.Component {
  
 
 
+
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
     });
   };
 
+
+ 
+
+ 
+
   
 
   render() {
-    const { classes, buttonContent, children } = this.props;
+    const { classes, buttonContent, children, MyOpenState } = this.props;
 
-    const sideList = (
-      <div className={classes.list}>
-        <h1>Hi Right Drawer</h1>
-      </div>
-    );
+   
 
-    const fullList = (
-      <div className={classes.fullList}>
-        <h2>Hi Items</h2>
-      </div>
-    );
 
     return (
       <div>
         <span  onClick={this.toggleDrawer('right', true)}>{buttonContent}</span>       
-        <Drawer  anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+        <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
           <div tabIndex={0} role="button"
             // onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}
           >

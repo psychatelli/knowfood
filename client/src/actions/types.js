@@ -9,3 +9,4 @@ export const DELETE_RECIPE = 'DELETE_RECIPE'
 
 export const POST_STEP = 'POST_STEP'
 export const DELETE_STEP = 'DELETE_STEP'
+export const SELECTED_RECIPE = 'SELECTED_RECIPE'

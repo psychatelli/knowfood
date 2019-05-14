@@ -6650,6 +6650,20 @@ input[type=range]::-ms-thumb {
   text-transform: uppercase;
   font-size: 15px; }
 
+.RecipeStepEdit {
+  border: solid thin #dedcdc;
+  border-radius: 10px;
+  background: #f2f0f0;
+  padding: 10px;
+  margin: 10px 0px; }
+  .RecipeStepEdit img {
+    width: 80%; }
+  .RecipeStepEdit h6 {
+    color: #787777; }
+  .RecipeStepEdit input {
+    height: 50px;
+    overflow-y: scroll; }
+
 body {
   overflow-x: hidden; }
 

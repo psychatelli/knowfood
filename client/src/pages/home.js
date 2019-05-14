@@ -1,14 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getRecipes, addRecipe, deleteRecipe, updateRecipe } from '../actions/recipesAction';
+import { getRecipes, addRecipe, deleteRecipe, selectedRecipe } from '../actions/recipesAction';
+import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+
 import CircleButton from '../components/common/circleButton';
 import Menu_dropdown from '../components/common/menu_dropdown';
 import EditableInput from '../components/common/editableInput';
+import EditRecipe from '../components/EditRecipe/editRecipe';
+
 import NewRecipePost from '../components/NewRecipePost/newRecipePost';
-import DrawerRight from '../components/common/drawerright';
+// import DrawerRight from '../components/common/drawerright';
 import Button from '@material-ui/core/Button';
+import Drawer from '@material-ui/core/Drawer';
 
 
+const styles = {
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+  DrawerContainer: {
+    width: 400,
+    padding: 20
+  }
+  
+};
 
 export class Home extends Component {
 
@@ -19,20 +38,14 @@ export class Home extends Component {
           _id: '',
           title: '',
           thumbnail: 'AddThumbnail',
-          titleEdited: 'a',
-          thumbnaileEdited: '',
-          indexEdited: '',
           errors: {},
           active: true,
+          right: false,
 
 
         }
-        // this.handleChange = this.handleChange.bind(this);
-        this.updateRecipe = this.updateRecipe.bind(this)
+
     }
-
-   
-
 
       componentWillMount() {
         this.props.getRecipes();
@@ -40,61 +53,36 @@ export class Home extends Component {
       }
 
      
-     
-     
+
       onDeleteClick(id) {
         this.props.deleteRecipe(id);
-
       }
   
-    
-   
-      updateRecipe() {
-        let newRecipe = {
-           title: this.state.titleEdited
-        }
-            // console.log(`your updateRecipe ${this.state.indexEdited} ${this.state.thumbnaileEdited} ${this.state.titleEdited}`)
-            this.props.updateRecipe(this.state.indexEdited, newRecipe)
-
-            this.setState({ 
-              tindexEdited : '',
-              thumbnaileEdited : '',
-              titleEdited : ''
-             });
-          }
-
-          
-      // handleChange = input => evt => {
-      //   this.setState({
-      //     // [input]: evt.target.value,
-      //     // thumbnaileEdited: input.thumbnail,
-      //     titleEdited: evt.target.value,
-      //     indexEdited: input._id
-      //     })
-      //   } 
-
-      // handleChange = e => {
-      //   this.setState({
-      //     title: e.target.value
-      //     })
-      //   }
-  
-       
-        
       editRow = (recipe) =>{
-        this.setState({
-           _id: recipe.id,
-           thumbnaileEdited: recipe.thumbnail,
-           titleEdited: recipe.title,
-        })
+        this.props.selectedRecipe(recipe);
+        this.MytoggleDrawer()
     }
-        
+
+    
+    toggleDrawer = (side, open) => () => {
+      this.setState({
+        [side]: open,
+      });
+    };
+
+    MytoggleDrawer = () => {
+      this.setState({
+        right: true,
+      });
+    };
+
+
 
   render() {
-    const { recipes } = this.props;
+    const { recipes, classes } = this.props;
     
     const NotesIcon = (
-      <Button><i title="Notes" className="material-icons">note</i> Notes</Button>
+      <Button><i  className="Opendrawer">note</i> Notes</Button>
   )
 
     const Recipes = recipes.map((item) => (
@@ -111,11 +99,14 @@ export class Home extends Component {
               </div>
 
               <div> 
-                <Menu_dropdown title='' deleteItem={this.onDeleteClick.bind(this, item._id)} editContent={this.editRow.bind(this, item)}/>
+                <Menu_dropdown  deleteItem={this.onDeleteClick.bind(this, item._id)} editContent={this.editRow.bind(this, item)}/>
+
               </div>
           </div>
               {/* <h6>{item.thumbnail}</h6> */}
-         <img src={item.thumbnail} />
+          <Link to={`/recipe/${item._id}`}>  
+          <img src={item.thumbnail} /> 
+          </Link>
       </div>
     ))
 
@@ -123,7 +114,7 @@ export class Home extends Component {
     return (
       <div className='Grid_wrapper'>
         <div className='SpaceBetween'>
-            <div> <h4>{this.state.titleEdited} </h4> </div>
+            <div>  </div>
 
             <div> 
               <CircleButton color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
@@ -136,12 +127,24 @@ export class Home extends Component {
       
         {Recipes}
 
-       {NotesIcon}
        
-        <DrawerRight buttonContent={NotesIcon}>
-            <h5>Edit Recipe</h5>
-        <h5>{this.state.titleEdited}</h5>
-        </DrawerRight>
+
+
+        <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+          <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
+          
+
+         <div className={classes.DrawerContainer}>
+          <br/>
+          
+          <EditRecipe />
+            
+          </div>
+        </Drawer>
+
+
+
+
       </div>
 
      
@@ -154,5 +157,6 @@ const mapStateToProps = state => ({
   recipes: state.recipes.items,
 })
 
-export default connect(mapStateToProps, {getRecipes, deleteRecipe, updateRecipe})(Home)
+// export default connect(mapStateToProps, {getRecipes, deleteRecipe, updateRecipe})(Home)
 // export default Home
+export default connect(mapStateToProps, {getRecipes, deleteRecipe, selectedRecipe})(withStyles(styles)(Home));

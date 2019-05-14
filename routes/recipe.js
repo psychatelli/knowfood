@@ -75,11 +75,6 @@ router.put('/:id',  (req, res) => {
 
  
 
-
-
-
-
-
 // @route DELETE api/recipe/:id
 // @route Delete single recipe
 // @route private
@@ -95,16 +90,11 @@ router.delete('/:id', (req, res) => {
 
 
 
-// @route GET api/recipe/step/:id
-// @route Get all recipe 
+// @route POST api/recipe/step/:recipe_id
+// @route post a step
 // @route Public
 
 router.post('/step/:recipe_id', (req, res) => {
-
-    // const { errors, isValid } = validateRecipeInput(req.body);
-    //  if(!isValid) {
-    //     return res.status(400).json(errors);
-    // }
 
     Recipe.findById(req.params.recipe_id)
     .then(recipe => {
@@ -119,6 +109,52 @@ router.post('/step/:recipe_id', (req, res) => {
     })
     .catch(err => res.status(404).json( {noRecipeFound: 'Could not add STEP'} ));
 });
+
+
+
+
+
+
+
+
+
+// @route   PUT api/recipe/:recipe_id/:step_id
+// @desc    Update Recipe Step
+// @access  Private
+router.put('/step/:recipe_id/:step_id',  (req, res) => {
+  var query = { title: 'Mole' };
+  var recipe_id = req.params.recipe_id;
+  var step_id = req.params.step_id;
+
+ 
+  Recipe.findOneAndUpdate(
+    { _id : recipe_id, "step._id" : step_id }, 
+    // { $set: newFields },
+    { "step.$.text" : req.body.text, "step.$.thumbnail" : req.body.thumbnail }, 
+    {new: true}, 
+    (err, recipe) => {
+    if (err) return res.status(500).send(err);
+    return res.send(recipe);
+    }
+  )
+
+
+  // Recipe.findOneAndUpdate({ _id : recipe_id, "step._id" : step_id }, { "step.$.text" : 'Chapter 6', "step.$.thumbnail" : 'Chapter 6' }, {new: true}, (err, recipe) => {
+  //   if (err) return res.status(500).send(err);
+  //   return res.send(recipe);
+    
+  //   }
+  // )
+
+
+  // Recipe.findOneAndUpdate({ title : 'Chapter 1', "step.text" : 'Chapter 1' }, { "step.$.text" : 'Chapter 2' }, {new: true}, (err, recipe) => {
+  //   if (err) return res.status(500).send(err);
+  //   return res.send(recipe);
+    
+  //   }
+  // )
+
+  });
 
 
 

@@ -10,7 +10,6 @@ const RecipeSchema = new Schema({
       title: {
         type: String,
         default: 'Add Title'
-
       },
       ingredients: {
         type: String

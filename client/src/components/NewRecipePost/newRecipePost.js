@@ -13,24 +13,23 @@ export class NewRecipePost extends Component {
      
     }
     this.handleChange = this.handleChange.bind(this);
-
     this.onSubmit = this.onSubmit.bind(this)
 }
 
 
-onSubmit(e) {
-  e.preventDefault();
-  const AddedRecipe = {
-    title: this.state.title,
-    thumbnail: this.state.thumbnail,
-  }
-    this.props.addRecipe(AddedRecipe);
+    onSubmit(e) {
+      e.preventDefault();
+      const AddedRecipe = {
+        title: this.state.title,
+        thumbnail: this.state.thumbnail,
+      }
+        this.props.addRecipe(AddedRecipe);
 
-    this.setState({ 
-      title : '',
-      thumbnail : '',
-     });
-}
+        this.setState({ 
+          title : '',
+          // thumbnail : '',
+        });
+      }
 
     handleChange = e => {
       this.setState({
