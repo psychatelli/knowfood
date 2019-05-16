@@ -34,6 +34,20 @@ export const getRecipes = () => dispatch => {
       
   };
 
+  export const getRecipe = id => dispatch => {
+
+    axios
+      .get(`/api/recipe/${id}`)
+      .then(res =>
+
+        dispatch({
+          type: GET_RECIPE,
+          payload: res.data
+        })
+      ) 
+
+  };
+
 
 
 

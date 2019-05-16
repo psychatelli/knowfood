@@ -126,11 +126,15 @@ router.put('/step/:recipe_id/:step_id',  (req, res) => {
   var recipe_id = req.params.recipe_id;
   var step_id = req.params.step_id;
 
- 
-  Recipe.findOneAndUpdate(
+const newFields = {};
+if(req.body.thumbnail) newFields.thumbnail = req.body.thumbnail;
+if(req.body.text) newFields.text = req.body.text;
+
+
+Recipe.findOneAndUpdate(
     { _id : recipe_id, "step._id" : step_id }, 
-    // { $set: newFields },
-    { "step.$.text" : req.body.text, "step.$.thumbnail" : req.body.thumbnail }, 
+    { "step.$.text" : req.body.text, "step.$.thumbnail" : req.body.thumbnail },
+    // {'$set': req.body }, 
     {new: true}, 
     (err, recipe) => {
     if (err) return res.status(500).send(err);
@@ -138,21 +142,23 @@ router.put('/step/:recipe_id/:step_id',  (req, res) => {
     }
   )
 
-
-  // Recipe.findOneAndUpdate({ _id : recipe_id, "step._id" : step_id }, { "step.$.text" : 'Chapter 6', "step.$.thumbnail" : 'Chapter 6' }, {new: true}, (err, recipe) => {
+  // Recipe.findOneAndUpdate(
+  //   { _id : recipe_id, "step._id" : step_id }, 
+  //   { $set: newFields },
+  //   {new: true}, 
+  //   (err, recipe) => {
   //   if (err) return res.status(500).send(err);
   //   return res.send(recipe);
-    
   //   }
   // )
 
 
-  // Recipe.findOneAndUpdate({ title : 'Chapter 1', "step.text" : 'Chapter 1' }, { "step.$.text" : 'Chapter 2' }, {new: true}, (err, recipe) => {
-  //   if (err) return res.status(500).send(err);
-  //   return res.send(recipe);
-    
-  //   }
-  // )
+ 
+  
+
+ 
+  
+  
 
   });
 

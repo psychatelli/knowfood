@@ -7,6 +7,7 @@ import  {BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
 import Nav from './components/Nav';
 
 import Home from './pages/home';
+import Recipe from './pages/Recipe/recipe';
 
 class App extends Component {
   render() {
@@ -18,6 +19,10 @@ class App extends Component {
               <div className="Wrapper"> 
               <Switch> 
               <Route exact path="/" component={Home} />
+              </Switch>
+
+              <Switch>
+              <Route exact path="/recipe/:id" component={Recipe} />
               </Switch>
 
               </div>

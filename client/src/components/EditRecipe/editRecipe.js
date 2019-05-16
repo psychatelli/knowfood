@@ -13,6 +13,9 @@ export class EditRecipe extends Component {
           title: this.props.recipe.title,
           thumbnaileEdited: '',
           indexEdited: '',
+          recipeText : '',
+          recipeThumbnail: '',
+          stepTitle: ''
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -33,6 +36,12 @@ export class EditRecipe extends Component {
         //   this.updateRecipe()
         } 
 
+
+      
+
+
+      
+
   
 
         updateRecipe() {
@@ -41,9 +50,7 @@ export class EditRecipe extends Component {
         }
             this.props.updateRecipe(this.props.recipe._id, newRecipe)
             this.props.getRecipes()
-
-           
-          }
+        }
 
 
 
@@ -56,6 +63,20 @@ export class EditRecipe extends Component {
           
              
           }
+
+
+
+          handleStepChange = input => evt => {
+              console.log(evt)
+            this.setState({
+              [input]: evt.target.value,
+              // thumbnaileEdited: input.thumbnail,
+            //   titleEdited: evt.target.value,
+            //   indexEdited: input._id
+              })
+    
+            //   this.updateRecipe()
+            } 
 
   render() {
 
@@ -71,7 +92,7 @@ export class EditRecipe extends Component {
             //   }}
             />
                 
-            <RecipeStepEdit steps={recipe.step} />
+            <RecipeStepEdit steps={recipe.step} onChange={this.handleStepChange('stepTitle')} />
 
             <button>Submit</button>
         </form>

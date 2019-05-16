@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getRecipes, addRecipe, deleteRecipe, selectedRecipe } from '../actions/recipesAction';
+import { getRecipe, deleteRecipe, selectedRecipe } from '../../actions/recipesAction';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
-import CircleButton from '../components/common/circleButton';
-import Menu_dropdown from '../components/common/menu_dropdown';
-import EditableInput from '../components/common/editableInput';
-import EditRecipe from '../components/EditRecipe/editRecipe';
+import CircleButton from '../../components/common/circleButton';
+import Menu_dropdown from '../../components/common/menu_dropdown';
+import EditableInput from '../../components/common/editableInput';
 
-import NewRecipePost from '../components/NewRecipePost/newRecipePost';
+import NewRecipePost from '../../components/NewRecipePost/newRecipePost';
 // import DrawerRight from '../components/common/drawerright';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
-
+import StepFeed from './stepFeed';
+import RecipeStepEdit from '../../components/EditRecipe/recipeStepEdit';
 
 const styles = {
   list: {
@@ -29,7 +29,7 @@ const styles = {
   
 };
 
-export class Home extends Component {
+export class Recipe extends Component {
 
 
       constructor(props) {
@@ -48,8 +48,7 @@ export class Home extends Component {
     }
 
       componentWillMount() {
-        this.props.getRecipes();
-        console.log('Component will mount')
+        this.props.getRecipe(this.props.match.params.id);
       }
 
      
@@ -79,36 +78,13 @@ export class Home extends Component {
 
 
   render() {
-    const { recipes, classes } = this.props;
+    const { recipe, classes } = this.props;
     
     const NotesIcon = (
       <Button><i  className="Opendrawer">note</i> Notes</Button>
   )
-    const Recipes = recipes.map((item) => (
-      <div className='Card RecipeCard'>
-    
-         <div className='SpaceBetween'>
-              <div>         
-                {/* <EditableInput 
-                HandleChange={this.handleChange(item._id)} 
-                value={item.title} 
-                name='title'
-                />   */}
-                {/* <input placeholder='Insert Title...' value={item.title} name={item.id} onChange={this.handleChange(item)} onBlur={this.updateRecipe}  /> */}
-                <h5> {item.title} </h5>
-              </div>
 
-              <div> 
-                <Menu_dropdown  deleteItem={this.onDeleteClick.bind(this, item._id)} editContent={this.editRow.bind(this, item)}/>
 
-              </div>
-          </div>
-              {/* <h6>{item.thumbnail}</h6> */}
-          <Link to={`/recipe/${item._id}`}>  
-          <img src={item.thumbnail} /> 
-          </Link>
-      </div>
-    ))
 
 
     return (
@@ -125,10 +101,26 @@ export class Home extends Component {
           <NewRecipePost  ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
        
       
-        {Recipes}
+             <div className='Card RecipeCard'>
+      
+          <div className='SpaceBetween'>
+               <div>         
+              
+                 <h5> {recipe.title} </h5>
+               </div>
+
+               <div> 
+                 <Menu_dropdown  deleteItem={this.onDeleteClick.bind(this, recipe._id)} editContent={this.editRow.bind(this, recipe)}/>
+
+               </div>
+           </div>
+           <Link to={`/recipe/${recipe._id}`}>  
+           <img src={recipe.thumbnail} /> 
+           </Link>
+       </div>
 
        
-
+       <RecipeStepEdit steps={recipe.step} />
 
         <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
           <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
@@ -137,7 +129,7 @@ export class Home extends Component {
          <div className={classes.DrawerContainer}>
           <br/>
           
-          <EditRecipe />
+          {/* <EditRecipe /> */}
             
           </div>
         </Drawer>
@@ -154,9 +146,9 @@ export class Home extends Component {
 
 
 const mapStateToProps = state => ({
-  recipes: state.recipes.items,
+  recipe: state.recipes.item,
 })
 
 // export default connect(mapStateToProps, {getRecipes, deleteRecipe, updateRecipe})(Home)
 // export default Home
-export default connect(mapStateToProps, {getRecipes, deleteRecipe, selectedRecipe})(withStyles(styles)(Home));
+export default connect(mapStateToProps, {getRecipe, deleteRecipe})(withStyles(styles)(Recipe));

@@ -17,8 +17,16 @@ const initialState = {
             items: action.payload,
         };
 
+        case GET_RECIPE:
+         console.log(`GET_RECIPE ${JSON.stringify(action.payload)}`); 
+
+        return{
+            ...state,
+            item: action.payload,
+        };
+
         case ADD_RECIPE:
-        console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
+        // console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
         return {
            ...state,
              items: [action.payload, ...state.items],
@@ -31,7 +39,7 @@ const initialState = {
         };
 
         case UPDATE_RECIPE:
-        console.log(`RECUDER ${JSON.stringify(state)}`); 
+        // console.log(`RECUDER ${JSON.stringify(state)}`); 
 
         return {
            ...state,
@@ -39,6 +47,8 @@ const initialState = {
         };
 
         case SELECTED_RECIPE:
+        console.log(`SELECTED_RECIPE ${JSON.stringify(action.payload)}`); 
+
         return{
             ...state,
             itemSelected: action.payload,
