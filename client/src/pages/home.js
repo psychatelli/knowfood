@@ -92,12 +92,7 @@ export class Home extends Component {
     
          <div className='SpaceBetween'>
               <div>         
-                {/* <EditableInput 
-                HandleChange={this.handleChange(item._id)} 
-                value={item.title} 
-                name='title'
-                />   */}
-                {/* <input placeholder='Insert Title...' value={item.title} name={item.id} onChange={this.handleChange(item)} onBlur={this.updateRecipe}  /> */}
+           
                 <h5> {item.title} </h5>
               </div>
 
@@ -106,7 +101,6 @@ export class Home extends Component {
 
               </div>
           </div>
-              {/* <h6>{item.thumbnail}</h6> */}
           <Link to={`/recipe/${item._id}`}>  
           <img src={item.thumbnail} /> 
           </Link>
