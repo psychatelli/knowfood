@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { updateRecipe, selectedRecipe, getRecipes } from '../../actions/recipesAction';
+import { updateRecipe, getRecipes } from '../../actions/recipesAction';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -16,7 +16,7 @@ export class EditRecipe extends Component {
           recipeText : '',
           recipeThumbnail: '',
           stepTitle: ''
-
+ 
         }
         this.handleChange = this.handleChange.bind(this);
          this.updateRecipe = this.updateRecipe.bind(this)
@@ -82,16 +82,10 @@ export class EditRecipe extends Component {
 
     const { recipe} = this.props;
    
-
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-            <label>TITLE</label> <input  value={this.state.title} onChange={this.handleChange('title')} onBlur={this.updateRecipe}
-            // InputProps={{
-            //     startAdornment: <InputAdornment position="start">Title</InputAdornment>,
-            //   }}
-            />
-                
+            <label>TITLE</label> <input  value={this.state.title} onChange={this.handleChange('title')} onBlur={this.updateRecipe}/>
             <RecipeStepEdit steps={recipe.step} onChange={this.handleStepChange('stepTitle')} />
 
             <button>Submit</button>

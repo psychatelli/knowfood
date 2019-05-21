@@ -4,10 +4,10 @@ import store from './store';
 import './App.css';
 
 import  {BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
-import Nav from './components/Nav';
+// import Nav from './components/Nav';
 
 import Home from './pages/home';
-import Recipe from './pages/Recipe/recipe';
+ import Recipe from './pages/Recipe/recipe';
 
 class App extends Component {
   render() {
@@ -17,14 +17,13 @@ class App extends Component {
           <div>
             {/* <Nav/> */}
               <div className="Wrapper"> 
-              <Switch> 
-              <Route exact path="/" component={Home} />
-              </Switch>
+                <Switch> 
+                  <Route exact path="/" component={Home} />
+                </Switch>
 
-              <Switch>
-              <Route exact path="/recipe/:id" component={Recipe} />
-              </Switch>
-
+                <Switch>
+                  <Route exact path="/recipe/:id" component={Recipe} />
+                </Switch>
               </div>
           </div>
         </Router>

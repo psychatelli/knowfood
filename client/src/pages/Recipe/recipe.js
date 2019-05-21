@@ -1,50 +1,64 @@
 import React, { Component } from 'react'
-import {  getRecipe } from '../../actions/recipesAction';
-import { connect } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import PropTypes from 'prop-types';
 
-// import RecipeStepEdit from '../../components/EditRecipe/recipeStepEdit';
+import { connect } from 'react-redux';
+import { getRecipe, getRecipes} from '../../actions/recipesAction';
+
 import Step from './step';
 
-export class Recipe extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {         
-          title: this.props.recipe.title,
-          thumbnaileEdited: '',
-          indexEdited: '',
-          recipeText : '',
-          recipeThumbnail: '',
-          stepTitle: ''
+import SingleRecipe from '../../components/SingleRecipe/editRecipe';
 
-        }
-   
+ class NewRecipe extends Component {
 
-    }
+  constructor(props) {
+      super(props);
+      this.state = {
+        MyRecipe : []
+      }
+  }
+
     componentWillMount() {
-      this.props.getRecipe(this.props.match.params.id);
-    }
+      // this.props.getRecipes();
+        this.props.getRecipe(this.props.match.params.id);
+      
+        // this.setState =({MyRecipe : this.props.recipe })
+      }
 
-  
+
+
   render() {
+    const { recipe, loading } = this.props;
+    let RecipeContent;
 
-    const { recipe} = this.props;
+    if (recipe === null || loading || Object.keys(recipe).length === 0) {
+      RecipeContent = <p>Loading...</p>;
+    } else {
+      RecipeContent = (
+        <div>
+         
+           <h2> {recipe.title}</h2>
+        {/* <SingleRecipe/> */}
 
+        <Step Step={recipe.step}/>
+
+        </div>
+      );
+    }
+  
     return (
       <div>
-              <h4>{recipe.title}</h4>
-              <Step Step={recipe.step}  />
-              <button>Submit</button>
+        {RecipeContent}
       </div>
     )
   }
 }
 
 
-const mapStateToProps = state => ({
-  recipe: state.recipes.item
-});
+  
 
-export default connect(mapStateToProps, { getRecipe })(Recipe);
- 
+const mapStateToProps = state => ({
+    recipe: state.recipes.item,
+  });
+  
+  export default connect(mapStateToProps, { getRecipe })(NewRecipe);
+   

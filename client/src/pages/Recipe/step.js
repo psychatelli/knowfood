@@ -4,15 +4,16 @@ export default class Step extends Component {
 
   render() {
 
-const {Item, stepID} = this.props;
+const {Item, stepID, Step} = this.props;
 
 
 var StepItems = Step.map((item, index) => {
     return (
         <div className='RecipeStepEdit'>
-            <h6>STEP {index + 1}</h6>
-            <input value={item.text} />
-            <img src={item.thumbnail}/>
+          <h3>{item.text}</h3>
+            {/* <h6>STEP {index + 1}</h6> */}
+            {/* <input value={item.text} /> */}
+            {/* <img src={item.thumbnail}/> */}
         </div>
      );
     });

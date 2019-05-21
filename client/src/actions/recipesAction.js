@@ -1,27 +1,12 @@
 import axios from 'axios';
-import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE } from './types';
+import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING } from './types';
 
-const data = [
-    {
-        title: 'This is title 1',
-        thumbnail: "Thumnail 1"
-    },
-    {
-        title: 'This is title 2',
-        thumbnail: "Thumnail 2"
-    },
-    
-]
 
-// export const getRecipes = () => dispatch => {
-//     dispatch({
-//     type: GET_RECIPES,
-//     payload: data
-//       });
-//     }
+
 
 
 export const getRecipes = () => dispatch => {
+
     axios
       .get('/api/recipe')
       .then(res =>
@@ -35,18 +20,29 @@ export const getRecipes = () => dispatch => {
   };
 
   export const getRecipe = id => dispatch => {
-
+    dispatch(setRecipeLoading());
     axios
       .get(`/api/recipe/${id}`)
       .then(res =>
-
         dispatch({
           type: GET_RECIPE,
           payload: res.data
         })
-      ) 
-
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_RECIPE,
+          payload: null
+        })
+      ); 
   };
+
+  // export const getRecipe = recipeData => dispatch => {
+  //   dispatch({
+  //     type: SELECTED_RECIPE,
+  //     payload: recipeData
+  //   })
+  // };
 
 
 
@@ -118,11 +114,18 @@ export const updateRecipe = (recipeId, recipeData ) => dispatch => {
 
   // Add Post
   export const selectedRecipe = recipeData => dispatch => {
-    console.log(recipeData)
     dispatch({
       type: SELECTED_RECIPE,
       payload: recipeData
     })
-      
-    
   };
+
+
+
+
+// Set loading state
+export const setRecipeLoading = () => {
+  return {
+    type: RECIPE_LOADING
+  };
+};

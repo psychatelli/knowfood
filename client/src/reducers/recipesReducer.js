@@ -1,4 +1,5 @@
-import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE } from '../actions/types';
+import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING
+} from '../actions/types';
    
 
 const initialState = {
@@ -8,18 +9,26 @@ const initialState = {
     loading: false
   };
 
+  
+  
 
   export default function(state = initialState, action) {
       switch(action.type) {
+
+        case RECIPE_LOADING:
+        return {
+          ...state,
+          loading: true
+        };
+
         case GET_RECIPES:
         return{
             ...state,
             items: action.payload,
         };
-
+ 
         case GET_RECIPE:
-         console.log(`GET_RECIPE ${JSON.stringify(action.payload)}`); 
-
+        console.log(`Reducer Recipe: ${JSON.stringify(action.payload)}`)
         return{
             ...state,
             item: action.payload,
@@ -47,7 +56,7 @@ const initialState = {
         };
 
         case SELECTED_RECIPE:
-        console.log(`SELECTED_RECIPE ${JSON.stringify(action.payload)}`); 
+               console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
 
         return{
             ...state,

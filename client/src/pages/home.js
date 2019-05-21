@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getRecipes, addRecipe, deleteRecipe, selectedRecipe } from '../actions/recipesAction';
+import { getRecipes, addRecipe, deleteRecipe, selectedRecipe, getRecipe } from '../actions/recipesAction';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
@@ -63,7 +63,7 @@ export class Home extends Component {
         this.MytoggleDrawer()
     }
 
-    
+  
     toggleDrawer = (side, open) => () => {
       this.setState({
         [side]: open,
@@ -81,6 +81,9 @@ export class Home extends Component {
   render() {
     const { recipes, classes } = this.props;
     
+  
+
+
     const NotesIcon = (
       <Button><i  className="Opendrawer">note</i> Notes</Button>
   )
@@ -110,7 +113,7 @@ export class Home extends Component {
       </div>
     ))
 
-
+    
     return (
       <div className='Grid_wrapper'>
         <div className='SpaceBetween'>
@@ -123,12 +126,8 @@ export class Home extends Component {
         </div>
        
           <NewRecipePost  ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
-       
-      
+ 
         {Recipes}
-
-       
-
 
         <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
           <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
@@ -141,9 +140,6 @@ export class Home extends Component {
             
           </div>
         </Drawer>
-
-
-
 
       </div>
 
@@ -159,4 +155,4 @@ const mapStateToProps = state => ({
 
 // export default connect(mapStateToProps, {getRecipes, deleteRecipe, updateRecipe})(Home)
 // export default Home
-export default connect(mapStateToProps, {getRecipes, deleteRecipe, selectedRecipe})(withStyles(styles)(Home));
+export default connect(mapStateToProps, {getRecipes, deleteRecipe, selectedRecipe, getRecipe})(withStyles(styles)(Home));
