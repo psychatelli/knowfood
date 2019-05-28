@@ -93,7 +93,7 @@ router.delete('/:id', (req, res) => {
 // @route POST api/recipe/step/:recipe_id
 // @route post a step
 // @route Public
-
+ 
 router.post('/step/:recipe_id', (req, res) => {
 
     Recipe.findById(req.params.recipe_id)
@@ -104,12 +104,44 @@ router.post('/step/:recipe_id', (req, res) => {
         }
 
         //Add step to array
-        recipe.step.unshift(newStep)
+        recipe.step.push(newStep)
         recipe.save().then(recipe => res.json(recipe.step))
     })
     .catch(err => res.status(404).json( {noRecipeFound: 'Could not add STEP'} ));
 });
 
+
+// @route DELETE api/step/recipe/:id
+// @route Delete single recipe step
+// @route private
+router.delete('/step/:recipe_id/:step_id',
+  (req, res) => {
+    Recipe.findById(req.params.recipe_id)
+      .then(recipe => {
+        // Check to see if comment exists
+        if (
+          recipe.step.filter(
+            recipe => recipe._id.toString() === req.params.step_id
+          ).length === 0
+        ) {
+          return res
+            .status(404)
+            .json({ step: 'Step does not exist' });
+        }
+
+        // Get remove index
+        const removeIndex = recipe.step
+          .map(item => item._id.toString())
+          .indexOf(req.params.step_id);
+
+        // Splice comment out of array
+        recipe.step.splice(removeIndex, 1);
+
+        recipe.save().then(recipe => res.json(recipe));
+      })
+      .catch(err => res.status(404).json({ stepfound: 'No step found' }));
+  }
+);
 
 
 
@@ -165,7 +197,7 @@ Recipe.findOneAndUpdate(
 
 
 
-// @route   DELETE api/recipe/step/:id/:comment_id
+// @route   DELETE api/recipe/step/:id/:step_id
 // @desc    Remove comment from post
 // @access  Private
 router.delete('/step/:recipe_id/:step_id',(req, res) => {

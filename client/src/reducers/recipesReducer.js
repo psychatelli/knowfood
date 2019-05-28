@@ -1,9 +1,10 @@
-import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING
+import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING
 } from '../actions/types';
    
 
 const initialState = {
     items: [],
+    steps: [],
     item: {},
     itemSelected: {},
     loading: false
@@ -28,23 +29,30 @@ const initialState = {
         };
  
         case GET_RECIPE:
-        console.log(`Reducer Recipe: ${JSON.stringify(action.payload)}`)
+        // console.log(`Reducer Recipe: ${JSON.stringify(action.payload)}`)
         return{
             ...state,
             item: action.payload,
         };
 
         case ADD_RECIPE:
-        // console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
         return {
            ...state,
              items: [action.payload, ...state.items],
         };
 
+        // case POST_STEP:
+        // //  console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
+        // return {
+        //    ...state,
+        //      steps: [action.payload, ...state.items],
+        // };
+
+      
         case DELETE_RECIPE:
         return {
            ...state,
-          items: state.items.filter(recipe => recipe._id !== action.payload),
+          item: action.payload,
         };
 
         case UPDATE_RECIPE:
@@ -55,13 +63,6 @@ const initialState = {
           items: state.items.filter(recipe => recipe._id !== action.payload)
         };
 
-        case SELECTED_RECIPE:
-               console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
-
-        return{
-            ...state,
-            itemSelected: action.payload,
-        };
      
 
         default:

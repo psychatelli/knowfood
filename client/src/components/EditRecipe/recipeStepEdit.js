@@ -6,21 +6,23 @@ class RecipeStepEdit extends Component {
  
 
   render() {
-    const { steps, onChange } = this.props;
+    const { steps, onChange, step_id  } = this.props;
 
-    return steps.map((item, index) => (
+    return steps.map((item, index, deleteStep) => (
 
-        <div className='RecipeStepEdit'>
-        
-            <h6>STEP {index + 1}</h6>
-            <input value={item.text} col='50' row='50' onChange={onChange} />
+      <div  key={item._id} className='RecipeStepEdit'>
+      <button onClick={deleteStep(item._id)}> Delete </button>
 
-            <img src={item.thumbnail}/>
-        </div>
+      <h6>STEP {index + 1}</h6>
+      <input value={item.text} col='50' row='50'  />
+
+      <img src={item.thumbnail}/>
+  </div>
     //   <CommentItem key={comment._id} comment={comment} postId={postId} />
     ));
   }
 }
+
 
 
 

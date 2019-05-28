@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getRecipes, addRecipe, deleteRecipe, selectedRecipe, getRecipe } from '../actions/recipesAction';
+import { getRecipes, addRecipe, deleteRecipe, getRecipe } from '../actions/recipesAction';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
@@ -41,64 +41,57 @@ export class Home extends Component {
           errors: {},
           active: true,
           right: false,
-
-
         }
-
     }
 
       componentWillMount() {
         this.props.getRecipes();
-        console.log('Component will mount')
       }
 
      
+  
 
       onDeleteClick(id) {
         this.props.deleteRecipe(id);
       }
   
-      editRow = (recipe) =>{
-        this.props.selectedRecipe(recipe);
+      editRow = (recipe) =>{ 
         this.MytoggleDrawer()
-    }
+      }
 
   
-    toggleDrawer = (side, open) => () => {
-      this.setState({
-        [side]: open,
-      });
-    };
+      toggleDrawer = (side, open) => () => {
+        this.setState({
+          [side]: open,
+        });
+      };
 
-    MytoggleDrawer = () => {
-      this.setState({
-        right: true,
-      });
-    };
+      MytoggleDrawer = () => {
+        this.setState({
+          right: true,
+        });
+      };
 
 
 
-  render() {
-    const { recipes, classes } = this.props;
-    
+      render() {
+      const { recipes, classes } = this.props;
+      
   
 
 
     const NotesIcon = (
       <Button><i  className="Opendrawer">note</i> Notes</Button>
-  )
+    )
     const Recipes = recipes.map((item) => (
       <div className='Card RecipeCard'>
-    
-         <div className='SpaceBetween'>
+          <div className='SpaceBetween'>
               <div>         
-           
                 <h5> {item.title} </h5>
               </div>
 
               <div> 
                 <Menu_dropdown  deleteItem={this.onDeleteClick.bind(this, item._id)} editContent={this.editRow.bind(this, item)}/>
-
               </div>
           </div>
           <Link to={`/recipe/${item._id}`}>  
@@ -115,26 +108,22 @@ export class Home extends Component {
 
             <div> 
               <CircleButton color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
-              
             </div>
         </div>
        
           <NewRecipePost  ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
  
-        {Recipes}
+          {Recipes}
 
-        <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
-          <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
-          
-
-         <div className={classes.DrawerContainer}>
-          <br/>
-          
-          <EditRecipe />
+          <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+            <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
             
-          </div>
-        </Drawer>
 
+            <div className={classes.DrawerContainer}>
+              <br/>
+              <EditRecipe />
+            </div>
+          </Drawer>
       </div>
 
      
@@ -147,6 +136,5 @@ const mapStateToProps = state => ({
   recipes: state.recipes.items,
 })
 
-// export default connect(mapStateToProps, {getRecipes, deleteRecipe, updateRecipe})(Home)
-// export default Home
-export default connect(mapStateToProps, {getRecipes, deleteRecipe, selectedRecipe, getRecipe})(withStyles(styles)(Home));
+
+export default connect(mapStateToProps, {getRecipes, deleteRecipe, getRecipe})(withStyles(styles)(Home));

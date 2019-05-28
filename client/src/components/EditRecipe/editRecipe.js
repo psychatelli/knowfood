@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { updateRecipe, getRecipes } from '../../actions/recipesAction';
+import { updateRecipe, getRecipe, addRecipeStep, deleteRecipeStep } from '../../actions/recipesAction';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -15,14 +15,20 @@ export class EditRecipe extends Component {
           indexEdited: '',
           recipeText : '',
           recipeThumbnail: '',
-          stepTitle: ''
+          stepTitle: '',
+          StepId: '',
+          theRecipe: this.props.recipe,
  
         }
         this.handleChange = this.handleChange.bind(this);
          this.updateRecipe = this.updateRecipe.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.deleteStep = this.deleteStep.bind(this);
+
 
     }
+
+
 
 
     handleChange = input => evt => {
@@ -37,21 +43,23 @@ export class EditRecipe extends Component {
         } 
 
 
-      
-
-
-      
-
-  
+       
+ 
 
         updateRecipe() {
         let newRecipe = {
            title: this.state.title
         }
             this.props.updateRecipe(this.props.recipe._id, newRecipe)
-            this.props.getRecipes()
-        }
+            this.props.getRecipe(this.props.param);
+          }
 
+
+          deleteStep(selectedID) {
+            this.props.deleteRecipeStep(this.props.recipe._id, selectedID)
+            this.props.getRecipe(this.props.recipe._id);
+            
+          }
 
 
         onSubmit(e) {
@@ -60,11 +68,9 @@ export class EditRecipe extends Component {
                title: this.props.title,
             }
               this.props.updateRecipe(EditedRecipe);
-          
-             
           }
 
-
+         
 
           handleStepChange = input => evt => {
               console.log(evt)
@@ -80,14 +86,33 @@ export class EditRecipe extends Component {
 
   render() {
 
-    const { recipe} = this.props;
+    const { recipe, DeletePost, param } = this.props;
+    const {theRecipe} = this.state
    
+
+
+
+    const Steps =  recipe.step.map(function (item, index) {
+      return (
+        <div  key={item._id} className='RecipeStepEdit'>
+            {/* <button onClick={() => { this.deleteStep(item._id)}} > Delete </button> */}
+            <button onClick={() => { this.deleteStep(item._id)}} > Delete </button>
+
+            <h6>STEP {index + 1}</h6>
+            <input value={item.text} col='50' row='50'  />
+
+            <img src={item.thumbnail}/>
+        </div>
+      )
+      
+    }.bind(this))
+  
     return (
       <div>
+
         <form onSubmit={this.onSubmit}>
             <label>TITLE</label> <input  value={this.state.title} onChange={this.handleChange('title')} onBlur={this.updateRecipe}/>
-            <RecipeStepEdit steps={recipe.step} onChange={this.handleStepChange('stepTitle')} />
-
+          {Steps}
             <button>Submit</button>
         </form>
       </div>
@@ -95,11 +120,12 @@ export class EditRecipe extends Component {
   }
 }
 
-
+ 
 const mapStateToProps = state => ({
-    recipe: state.recipes.itemSelected,
+    recipe: state.recipes.item
 
   })
   
-  export default connect(mapStateToProps, {updateRecipe, getRecipes})(EditRecipe)
+  export default connect(mapStateToProps, {updateRecipe, addRecipeStep, deleteRecipeStep, getRecipe})(EditRecipe)
   
+ 

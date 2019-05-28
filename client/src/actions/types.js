@@ -1,5 +1,7 @@
 
 export const GET_RECIPES = 'GET_RECIPES'
+export const GET_ERRORS = 'GET_ERRORS'
+
 export const DELETE_RECIPES = 'DELETE_RECIPES'
 export const UPDATE_RECIPE = 'UPDATE_RECIPE'
 

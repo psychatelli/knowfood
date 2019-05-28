@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_RECIPES,DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING } from './types';
+import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS } from './types';
 
 
 
@@ -31,7 +31,7 @@ export const getRecipes = () => dispatch => {
       )
       .catch(err =>
         dispatch({
-          type: GET_RECIPE,
+          type: GET_ERRORS,
           payload: null
         })
       ); 
@@ -45,9 +45,7 @@ export const getRecipes = () => dispatch => {
   // };
 
 
-
-
-  // Add Post
+  // Add Recipe
 export const addRecipe = recipeData => dispatch => {
   // dispatch(clearErrors());
   // console.log(`AddREcipe: ${JSON.stringify(recipeData)}`)
@@ -59,13 +57,52 @@ export const addRecipe = recipeData => dispatch => {
         payload: res.data
       }),
     )
-    // .catch(err =>
-    //   dispatch({
-    //     type: GET_ERRORS,
-    //     payload: err.response.data
-    //   })
-    // );
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
+
+
+  // Add Recipe Step
+  export const addRecipeStep = (id, recipeData) => dispatch => {
+    // dispatch(clearErrors());
+    axios
+      .post(`/api/recipe/step/${id}`, recipeData)
+      .then(res =>
+        dispatch({
+          type: POST_STEP,
+          payload: res.data
+        }),
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  };
+
+  //Delete Recipe Step /step/:recipe_id/:step_id
+  export const deleteRecipeStep = (recipe_id, step_id) => dispatch => {
+    console.log(`deleteRecipeStep: ${recipe_id} ${step_id}`)
+    axios
+      .delete(`/api/recipe/step/${recipe_id}/${step_id}`)
+      .then(res =>
+        dispatch({
+          type: GET_RECIPE,
+          payload: res.data
+        }),
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  };
 
 
 // Delete Recipe
@@ -110,15 +147,6 @@ export const updateRecipe = (recipeId, recipeData ) => dispatch => {
     // );
 };
 
-
-
-  // Add Post
-  export const selectedRecipe = recipeData => dispatch => {
-    dispatch({
-      type: SELECTED_RECIPE,
-      payload: recipeData
-    })
-  };
 
 
 

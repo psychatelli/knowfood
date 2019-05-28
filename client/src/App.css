@@ -6528,7 +6528,8 @@ input[type=range]::-ms-thumb {
   display: grid;
   justify-content: center;
   max-width: 1200px;
-  margin: 0px auto; }
+  margin: 25px auto;
+  background: #f5f4f4; }
 
 .Grid_3Col {
   display: grid;
@@ -6663,6 +6664,11 @@ input[type=range]::-ms-thumb {
   .RecipeStepEdit input {
     height: 50px;
     overflow-y: scroll; }
+
+.Recipe_header {
+  background: white;
+  padding: 10px;
+  margin: 25px 0px; }
 
 body {
   overflow-x: hidden; }

@@ -10,10 +10,9 @@ const {Item, stepID, Step} = this.props;
 var StepItems = Step.map((item, index) => {
     return (
         <div className='RecipeStepEdit'>
-          <h3>{item.text}</h3>
-            {/* <h6>STEP {index + 1}</h6> */}
-            {/* <input value={item.text} /> */}
-            {/* <img src={item.thumbnail}/> */}
+            <h6>STEP {index + 1}</h6>
+            <p>{item.text} </p>
+            <img src={item.thumbnail}/>
         </div>
      );
     });
