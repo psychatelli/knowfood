@@ -40,7 +40,7 @@ const styles = {
         text: '',
         thumbnail: 'https://photos.smugmug.com/Test/i-W5SXVkM/0/1d663a9e/S/fettuccine-S.jpg',
       }
-      this.onSubmit = this.onSubmit.bind(this);
+      // this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentWillMount() {
@@ -56,12 +56,12 @@ const styles = {
     // }
     //   }
 
-  //   componentWillUpdate(nextProps){
-  //     console.log("NEXT PROPS:", nextProps)
-  //     if(this.props.getRecipe !==  nextProps.getRecipe ){
-  //       nextProps.getRecipe(this.props.param)
-  // }
-  //   }
+    componentDidUpdate(nextProps){
+      console.log("NEXT PROPS:", nextProps)
+      if(this.props.getRecipe !==  nextProps.getRecipe ){
+        this.props.getRecipe(this.props.param)
+  }
+    }
 
 
       // shouldComponentUpdate(nextProp, nextState) {
@@ -106,7 +106,7 @@ const styles = {
         }
           this.props.addRecipeStep(this.props.match.params.id, AddedStep);
   
-          this.props.getRecipe(this.props.match.params.id)
+          //this.props.getRecipe(this.props.match.params.id)
 
           this.setState({ 
             text : '',
@@ -167,7 +167,9 @@ const styles = {
          </div>
 
 
-        <NewStepPost handleChange={this.handleChange} text={this.state.text} onSubmit={this.onSubmit} param={this.props.match.params.id}   ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
+        <NewStepPost handleChange={this.handleChange} text={this.state.text} 
+        onSubmit={this.onSubmit.bind(this)}
+        param={this.props.match.params.id}   ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
 
       
 

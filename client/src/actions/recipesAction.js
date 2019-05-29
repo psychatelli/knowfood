@@ -73,7 +73,7 @@ export const addRecipe = recipeData => dispatch => {
       .post(`/api/recipe/step/${id}`, recipeData)
       .then(res =>
         dispatch({
-          type: POST_STEP,
+          type: GET_RECIPE,
           payload: res.data
         }),
       )

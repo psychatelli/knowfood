@@ -27,9 +27,9 @@ const initialState = {
             ...state,
             items: action.payload,
         };
- 
+  
         case GET_RECIPE:
-        // console.log(`Reducer Recipe: ${JSON.stringify(action.payload)}`)
+        //  console.log(`Reducer Recipe: ${...state}
         return{
             ...state,
             item: action.payload,
@@ -45,8 +45,8 @@ const initialState = {
         // //  console.log(`RECUDER ${JSON.stringify(action.payload)}`); 
         // return {
         //    ...state,
-        //      steps: [action.payload, ...state.items],
-        // };
+        //    item: action.payload,
+        //   };
 
       
         case DELETE_RECIPE:

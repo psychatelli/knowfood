@@ -105,7 +105,7 @@ router.post('/step/:recipe_id', (req, res) => {
 
         //Add step to array
         recipe.step.push(newStep)
-        recipe.save().then(recipe => res.json(recipe.step))
+        recipe.save().then(recipe => res.json(recipe))
     })
     .catch(err => res.status(404).json( {noRecipeFound: 'Could not add STEP'} ));
 });
