@@ -6673,6 +6673,13 @@ input[type=range]::-ms-thumb {
 body {
   overflow-x: hidden; }
 
+.Alert-danger {
+  background: #e95e5e;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  margin: 10px 0px; }
+
 .Shadow, .Card {
   -webkit-box-shadow: 1px 1px 13px 0px #a399a3;
   -moz-box-shadow: 1px 1px 13px 0px #a399a3;

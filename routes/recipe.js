@@ -1,36 +1,70 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator/check');
+const auth = require('../middleware/auth');
+
 // const mongoose = require('mongoose');
 // const passport = require('passport');
 
 const Recipe = require('../models/recipe');
+const Profile = require('../models/profile');
+const User = require('../models/user');
 
 const validateRecipeInput = require('../validation/recipe');
 
 
-
 // @route GET api/recipe
 // @route Get all recipe
-// @route Public
-router.get('/', (req, res) => {
-    Recipe.find()
-    .sort( { date: -1} )
-    .then(recipes => res.json(recipes))
-    .catch(err => res.status(404).json( {nopostfound: 'No recipe found'} ));
+// @route Private
+              // router.get('/', (req, res) => {
+              //     Recipe.find()
+              //     .sort( { date: -1} )
+              //     .then(recipes => res.json(recipes))
+              //     .catch(err => res.status(404).json( {nopostfound: 'No recipe found'} ));
+              // })
 
-})
+  router.get('/', auth, async (req, res) => {
+    try {
+      let Allrecipes = await Recipe.find().sort( { date: -1} );
+      res.json(Allrecipes)
+
+    }catch(err) {
+      console.error(err.message)
+      res.status(500).send('No Recipies Round')
+    }
+  })
+
+
 
 
 // @route GET api/recipe/:id
 // @route Get one recipe
 // @route Public
 
-router.get('/:id', (req,res) => {
-    Recipe.findById(req.params.id)
-    .then(recipe => res.json(recipe))
-    .catch(err => res.status(404).json( {nopostfound: 'No recipe found with that id'} ));
-})
+// router.get('/:id', (req,res) => {
+//     Recipe.findById(req.params.id)
+//     .then(recipe => res.json(recipe))
+//     .catch(err => res.status(404).json( {nopostfound: 'No recipe found with that id'} ));
+// })
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
 
+    if(!recipe) {
+      return res.status(404).json({ msg: 'Recipe not found'})
+    }
+
+    res.json(recipe)
+
+  }catch(err){
+    console.error(err.message)
+    if(err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Recipe not found'})
+    }
+    res.status(500).send('Recipe not found')
+
+  }
+})
 
 
 
@@ -38,20 +72,73 @@ router.get('/:id', (req,res) => {
 // @route Post a recipe
 // @route Public
 
-router.post('/', (req, res) => {
-    
-    const newRecipe = new Recipe({
-        thumbnail: req.body.thumbnail,
-        title: req.body.title,
-        ingredients: req.body.ingredients,
-        username: req.body.username,
-        avatar: req.body.avatar,
-    });
+          // router.post('/', (req, res) => {
+              
+          //     const newRecipe = new Recipe({
+          //         thumbnail: req.body.thumbnail,
+          //         title: req.body.title,
+          //         ingredients: req.body.ingredients,
+          //         username: req.body.username,
+          //         avatar: req.body.avatar,
+          //     });
 
-    newRecipe.save().then(recipe => res.json(recipe))
-    .catch(err => res.status(404).json( {noRecipeFound: 'Could not add recipe'} ));
-});
+          //     newRecipe.save().then(recipe => res.json(recipe))
+          //     .catch(err => res.status(404).json( {noRecipeFound: 'Could not add recipe'} ));
+          // });
 
+
+          //MY SIMPLE ASYNC POST
+          // router.post('/', async (req, res) => {
+          //     try{
+          //       const newRecipe = new Recipe({
+          //         thumbnail: req.body.thumbnail,
+          //         title: req.body.title,
+          //         ingredients: req.body.ingredients,
+          //         username: req.body.username,
+          //         avatar: req.body.avatar,
+          //       }); 
+              
+          //       const recipe = await newRecipe.save()
+          //       res.json(recipe)
+
+
+          //     }catch(err){
+          //       console.error(err.message)
+          //       res.status(500).send('Could not add recipe')
+          //       }  
+          //   })
+
+
+          router.post('/', [ auth, [ check('title', 'title is required').not().isEmpty() ]
+          ], async (req, res) => {
+              
+            const errors = validationResult(req);
+              if(!errors.isEmpty()) {
+                return res.status(400).json({errors: errors.array() })
+              }
+
+              try {
+                const user = await User.findById(req.user.id).select('-password');
+
+                const newRecipe = new Recipe({
+                  thumbnail: req.body.thumbnail,
+                  title: req.body.title,
+                  username: user.username,
+                  avatar: user.avatar,
+                  user: req.user.id,
+                  ingredients: req.body.ingredients,
+                })
+
+
+            const recipe = await newRecipe.save();
+            res.json(recipe)
+
+
+              }catch(err) {
+                console.error(err.message)
+                res.status(500).send('Server Error - Post Recipe')
+              }
+          });
 
 
 
@@ -61,16 +148,27 @@ router.post('/', (req, res) => {
 // @route   POST api/recipe/:id
 // @desc    Update Recipe
 // @access  Private
+
 router.put('/:id',  (req, res) => {
- 
   Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, recipe) => {
     if (err) return res.status(500).send(err);
     return res.send(recipe);
     
-    }
-)
-
+      }
+  )
   });
+
+  // router.put('/:id', async (req, res) => {
+  //   try{
+  //     let recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true});
+  //     return res.send(recipe)
+
+  //   }catch(err){
+  //     console.error(err.message)
+  //     res.status(500).send('Could not update recipe')
+  //   }
+   
+  // })
 
 
  
@@ -78,15 +176,41 @@ router.put('/:id',  (req, res) => {
 // @route DELETE api/recipe/:id
 // @route Delete single recipe
 // @route private
-router.delete('/:id', (req, res) => {
-        Recipe.findById(req.params.id)
-        .then(recipe => {
-            //Delete
-            recipe.remove().then(() => res.json({ success: true}));
-        })
-        .catch(err => res.status(404).json( {RecipeNotFound: 'No recipe found'}));
-});
+          // router.delete('/:id', (req, res) => {
+          //         Recipe.findById(req.params.id)
+          //         .then(recipe => {
+          //             //Delete
+          //             recipe.remove().then(() => res.json({ success: true}));
+          //         })
+          //         .catch(err => res.status(404).json( {RecipeNotFound: 'No recipe found'}));
+          // });
 
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    let recipe = await Recipe.findById(req.params.id);
+
+    if(!recipe) {
+      return res.status(404).json({ msg: 'Recipe not found'})
+    }
+
+    //Check user
+    if(recipe.user.toString() !== req.user.id ){
+      return res.status(401).json({ msg: 'User not authorized'})
+    }
+    await recipe.remove();
+
+    res.json({msg: 'Recipe Removed'})
+
+
+  }catch(err) {
+    console.error(err.message)
+    if(err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Recipe not found'})
+    }
+    res.status(500).send('No Recipies Round')
+  }
+})
 
 
 
@@ -95,7 +219,6 @@ router.delete('/:id', (req, res) => {
 // @route Public
  
 router.post('/step/:recipe_id', (req, res) => {
-
     Recipe.findById(req.params.recipe_id)
     .then(recipe => {
         const newStep = {
@@ -109,6 +232,28 @@ router.post('/step/:recipe_id', (req, res) => {
     })
     .catch(err => res.status(404).json( {noRecipeFound: 'Could not add STEP'} ));
 });
+
+
+// router.post('/step/:recipe_id', async (req, res) => {
+
+//   try{
+
+//     let recipe = await Recipe.findById(req.params.recipe_id);
+//     let addNewStep = () => {
+//     const newStep = {
+//       thumbnail: req.body.thumbnail,  
+//       text: req.body.text
+//     }
+//     recipe.step.push(newStep)
+//      await recipe.save()
+//     res.json(recipe)
+//     }
+//   }catch(err){
+//     console.error(err.message)
+//     res.status(500).send('Could not add recipe step')
+//     } 
+
+// })
 
 
 // @route DELETE api/step/recipe/:id

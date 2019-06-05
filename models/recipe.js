@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 //User Schema
 const RecipeSchema = new Schema({
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+      },
       thumbnail: {
         type: String,
         default: 'Add Thumbnail'
@@ -12,7 +16,7 @@ const RecipeSchema = new Schema({
         default: 'Add Title'
       },
       ingredients: {
-        type: String
+        type: [String],
       },
       username: {
         type: String
@@ -34,12 +38,25 @@ const RecipeSchema = new Schema({
             } 
         }
       ],
+      likes: [
+        {
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+          },
+          
+        }
+      ],
       comments: [ 
         {
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+          },
           text: {
             type: String,
           },
-          name: {
+          username: {
             type: String
           },
           avatar: {
@@ -50,7 +67,8 @@ const RecipeSchema = new Schema({
             default: Date.now
           }
         }
-      ]  
+      ],
+        
 })
 
 

@@ -57,7 +57,6 @@ export class EditRecipe extends Component {
 
           deleteStep(selectedID) {
             this.props.deleteRecipeStep(this.props.recipe._id, selectedID)
-            this.props.getRecipe(this.props.recipe._id);
             
           }
 
@@ -85,7 +84,7 @@ export class EditRecipe extends Component {
             } 
 
   render() {
-
+ 
     const { recipe, DeletePost, param } = this.props;
     const {theRecipe} = this.state
    

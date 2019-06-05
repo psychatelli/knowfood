@@ -10,6 +10,7 @@ const config = require('./config/config');
 const users = require('./routes/users');
 const recipes = require('./routes/recipe');
 const auth = require('./routes/auth');
+const profile = require('./routes/profile');
 
 
 mongoose.connect(global.gConfig.database, { useNewUrlParser: true, useCreateIndex: true } );
@@ -46,6 +47,7 @@ app.get('/api', (req, res) => {
 app.use('/api/users', users);
 app.use('/api/recipe', recipes);
 app.use('/api/auth', auth);
+app.use('/api/profile', profile);
 
 // config variables
 app.listen(global.gConfig.node_port, () => {

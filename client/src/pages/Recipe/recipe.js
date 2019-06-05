@@ -106,7 +106,6 @@ const styles = {
         }
           this.props.addRecipeStep(this.props.match.params.id, AddedStep);
   
-          //this.props.getRecipe(this.props.match.params.id)
 
           this.setState({ 
             text : '',
