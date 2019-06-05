@@ -14,7 +14,7 @@ import Home from './pages/home';
 import setAuthToken from './utils/setAuthToken';
 // import Navbar from './components/Navbar';
 import Register from './pages/auth/Register';
-// import Login from './pages/auth/Login';
+import Login from './pages/auth/Login';
 // import Landing from './pages/Landing';
 
 if(localStorage.token){
@@ -46,11 +46,11 @@ const App = () => {
                   <Route exact path="/register" component={Register} />
                 </Switch>
 
-                {/* <Switch> 
+                 <Switch> 
                   <Route exact path="/login" component={Login} />
                 </Switch>
 
-                <Switch> 
+               {/* <Switch> 
                   <Route exact path="/landing" component={Landing} />
                 </Switch> */}
 

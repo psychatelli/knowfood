@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import classnames from 'classnames';
+import  { Link, Redirect}  from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
+import { login } from '../../actions/auth';
+import Alert from '../../components/common/alert';
+
 import TextFieldGroup from '../../components/common/TextFieldGroup';
 
 
@@ -13,26 +16,23 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            errors: {}
+            errors: {},
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
  
-    componentDidMount() {
-        if(this.props.auth.isAuthenticated) {
-            this.props.history.push('/dashboard');
+        componentDidMount() {
+            if(this.props.isAuthenticated){
+                this.props.history.push('/');
+            }
         }
-    }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.auth.isAuthenticated) {
-            this.props.history.push('/dashboard')
+        componentWillReceiveProps(nextProps) {
+            if(nextProps.isAuthenticated) {
+                this.props.history.push('/');
+            }
         }
-        if(nextProps.errors) {
-            this.setState({errors: nextProps.errors});
-        }
-    }
 
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value })
@@ -44,13 +44,17 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password,
         }
-        this.props.loginUser(userData);
+        this.props.login(userData);
     }
+
+    
+    
 
 
     render() {
         const { errors } = this.state;
 
+       
 
         return(
             <div className="login">
@@ -58,6 +62,8 @@ class Login extends Component {
                 <div className="row">
                     <div className="col-md-8 m-auto">
                     <h1 className="MainTitle">Log In</h1>
+                    <Alert />
+
                     <p className="lead text-center">Sign in to your account</p>
                     <center>
                     <form onSubmit={this.onSubmit}>
@@ -84,7 +90,10 @@ class Login extends Component {
                         </div>
                         <input type="submit" className="btn Button" />
                     </form>
+
                     </center>
+                    <span>If you don't have an account <Link to={'/register'}>Sign Up </Link>  </span>
+
                     </div>
                 </div>
                 </div>
@@ -94,15 +103,14 @@ class Login extends Component {
 }
  
 Login.propTypes = {
-    loginUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
-    errors: state.errors
+    isAuthenticated: state.auth.isAuthenticated
 })
 
- export default connect(mapStateToProps, { loginUser })(Login); 
+export default connect(mapStateToProps, { login })(Login); 
 

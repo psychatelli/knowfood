@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 // import { registerUser } from '../../actions/authActions';
 import { register  } from '../../actions/auth';
 import { setAlert  } from '../../actions/alert';
+import  {  Redirect}  from 'react-router-dom';
 
 import Alert from '../../components/common/alert';
 
@@ -27,12 +28,17 @@ constructor() {
 
 }
 
+    componentDidMount() {
+      if(this.props.isAuthenticated){
+          this.props.history.push('/');
+      }
+    }
 
-    // componentWillReceiveProps(nextProps) {
-    //   if(nextProps.errors) {
-    //     this.setState({ errors: nextProps.errors });
-    //   } 
-    // }
+    componentWillReceiveProps(nextProps) {
+      if(nextProps.isAuthenticated) {
+          this.props.history.push('/');
+      }
+    }
 
 
     onChange(e) {
@@ -135,6 +141,8 @@ Register.propTypes = {
   register: PropTypes.func.isRequired,
 }
 
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
 
-
-export default connect(null, { setAlert, register })(withRouter(Register)); 
+export default connect(mapStateToProps, { setAlert, register })(withRouter(Register)); 
