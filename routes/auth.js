@@ -11,8 +11,6 @@ const config = require('../config/config');
 
 
 
-
-
 //@route POST api/auth
 //@desc Test
 //@access Public
@@ -25,11 +23,6 @@ router.get('/', auth, async (req, res) => {
       res.status(500).send('Server Error 1')
     }
   })
-
-
-
-
-
 
 
 
@@ -73,21 +66,18 @@ try {
       }
     }
 
-    jwt.sign(payload, global.gConfig.jwtSecret, {expiresIn: 360000 }, (err, token) => {
-        if(err) throw err;
-        res.json({ token });
+      jwt.sign(payload, global.gConfig.jwtSecret, {expiresIn: 360000 }, (err, token) => {
+          if(err) throw err;
+          res.json({ token });
+      })
+        
+
+      }catch(err) {
+        console.error(err.message)
+        res.status(500).send('Server Error 2')
+      }
+
     })
-      
-
-
-
-}catch(err) {
-  console.error(err.message)
-  res.status(500).send('Server Error 2')
-}
-
-  
-  })
 
    
 module.exports = router;

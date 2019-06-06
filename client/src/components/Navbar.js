@@ -1,55 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import  { Link }  from 'react-router-dom';
-import logo from '../../img/WittwerStatus-logo.png';
+// import logo from '../../img/WittwerStatus-logo.png';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
-import { clearCurrentProfile } from '../../actions/profileActions';
+import { logout } from '../actions/auth';
 
 
 class Navbars extends Component {
-  onLogoutClick(e) {
-    e.preventDefault();
-    this.props.clearCurrentProfile();
-    this.props.logoutUser();
-    //window.location.href = '/login';
+  onLogoutClick() {
+    this.props.logout();
+    window.location.href = '/login';
+    // this.props.history.push('/login');
 
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated, loading } = this.props;
 
     const authLinks = (
       <ul className="right hide-on-med-and-down">
       
-      <li className="nav-item">
+        <li className="nav-item">
           <Link className="nav-link" to="/profiles">
-            Agents
+            Members
           </Link>
         </li> 
 
        <li className="nav-item">
-          <Link className="nav-link" to="/feed">
-            Conversations
+          <Link className="nav-link" to="/recipies">
+            Recipies
           </Link>
         </li>
 
-        
-
         <li className="nav-item">
-          <Link className="nav-link" to="/dashboard">
-            Dashboard
-          </Link>
-        </li>
-        <li className="nav-item">
-          <a  href="" onClick={this.onLogoutClick.bind(this)}   className="nav-link" >
-            <img
+          <a  href="#!" onClick={this.onLogoutClick.bind(this)}   className="nav-link" >
+            {/* <img
               className="rounded-circle"
               src={user.avatar}
               alt={user.name}
               style={{ width: '25px', marginRight: '5px' }}
               title="You must have a Gravatar connected to your email to display an image"
-            />{' '}
+            />{' '} */}
             Logout
           </a>
         </li>
@@ -84,35 +75,17 @@ class Navbars extends Component {
 
         return(
           <div>
-            <ul className="sidenav" id="mobile-demo">
-            <li><a href="sass.html">Sample Sidebar</a></li>
-            {/* <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">Javascript</a></li>
-            <li><a href="mobile.html">Mobile</a></li> */}
-          </ul>
+            
+              <div className="navbar-fixed">
+                  <nav className="grey darken-3">
+                      <div className="nav-wrapper">
+                        {/* <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo"><img style={{width:'140px'}} atl="logo"  src={logo} /></a> */}
+                        <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo">Skynet</a>
 
-          <div className="navbar-fixed">
-
-
-
-          <nav className="grey darken-3">
-               <div className="nav-wrapper">
-                {/* <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo"><img style={{width:'140px'}} atl="logo"  src={logo} /></a> */}
-                <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo">Skynet</a>
-
-                <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                {isAuthenticated ? authLinks : guestLinks}
-               </div>
-          </nav>
-
-             
-
-
-            </div>
-
-
-           
+                        {!loading && (<Fragment> { isAuthenticated ? authLinks : guestLinks } </Fragment>)} 
+                      </div>
+                  </nav>
+              </div>
 
             </div>
           
@@ -123,13 +96,15 @@ class Navbars extends Component {
 
 
 Navbars.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading
+
 })
 
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(Navbars);
+export default connect(mapStateToProps, { logout })(Navbars);

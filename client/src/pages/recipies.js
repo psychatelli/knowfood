@@ -29,7 +29,7 @@ const styles = {
   
 };
 
-export class Home extends Component {
+export class Recipies extends Component {
 
 
       constructor(props) {
@@ -137,5 +137,5 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, {getRecipes, deleteRecipe, getRecipe})(withStyles(styles)(Home));
+export default connect(mapStateToProps, {getRecipes, deleteRecipe, getRecipe})(withStyles(styles)(Recipies));
  

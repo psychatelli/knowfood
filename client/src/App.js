@@ -6,16 +6,16 @@ import './App.css';
 
 import  {BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
 
-// import Nav from './components/Nav';
+ import Navbar from './components/Navbar';
 
-import Home from './pages/home';
+import Recipies from './pages/recipies';
  import Recipe from './pages/Recipe/recipe';
  import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 // import Navbar from './components/Navbar';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
-// import Landing from './pages/Landing';
+import Landing from './pages/landing';
 
 if(localStorage.token){
   setAuthToken(localStorage.token)
@@ -35,10 +35,10 @@ const App = () => {
 <Provider store={store}> 
         <Router>
           <div>
-            {/* <Nav/> */}
+            <Navbar/>
               <div className="Wrapper"> 
                 <Switch> 
-                  <Route exact path="/" component={Home} />
+                  <Route exact path="/" component={Landing} />
                 </Switch>
 
 
@@ -50,9 +50,9 @@ const App = () => {
                   <Route exact path="/login" component={Login} />
                 </Switch>
 
-               {/* <Switch> 
-                  <Route exact path="/landing" component={Landing} />
-                </Switch> */}
+               <Switch> 
+                  <Route exact path="/recipies" component={Recipies} />
+                </Switch>
 
                 <Switch>
                   <Route exact path="/recipe/:id" component={Recipe} />

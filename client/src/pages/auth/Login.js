@@ -24,13 +24,17 @@ class Login extends Component {
  
         componentDidMount() {
             if(this.props.isAuthenticated){
-                this.props.history.push('/');
+                // this.props.history.push('/recipies');
+                    window.location.href = '/recipies';
+
             }
         }
 
         componentWillReceiveProps(nextProps) {
             if(nextProps.isAuthenticated) {
-                this.props.history.push('/');
+                // this.props.history.push('/recipies');
+                    window.location.href = '/recipies';
+
             }
         }
 
