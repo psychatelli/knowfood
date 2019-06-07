@@ -25,16 +25,14 @@ class Login extends Component {
         componentDidMount() {
             if(this.props.isAuthenticated){
                 // this.props.history.push('/recipies');
-                    window.location.href = '/recipies';
-
+                window.location.href = '/recipies';
             }
         }
 
         componentWillReceiveProps(nextProps) {
             if(nextProps.isAuthenticated) {
                 // this.props.history.push('/recipies');
-                    window.location.href = '/recipies';
-
+                window.location.href = '/recipies';
             }
         }
 
@@ -50,9 +48,6 @@ class Login extends Component {
         }
         this.props.login(userData);
     }
-
-    
-    
 
 
     render() {

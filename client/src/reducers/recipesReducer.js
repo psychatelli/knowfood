@@ -60,7 +60,8 @@ const initialState = {
 
         return {
            ...state,
-          items: state.items.filter(recipe => recipe._id !== action.payload)
+           item: action.payload,
+          // items: state.items.filter(recipe => recipe._id !== action.payload)
         };
 
      

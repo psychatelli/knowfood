@@ -74,6 +74,9 @@ const styles = {
 
       onDeleteClick(id) {
         this.props.deleteRecipe(id);
+        // this.props.history.push('/recipies');
+        // window.location.href = '/recipies';
+
       }
 
       editRow = (recipe) =>{

@@ -51,10 +51,10 @@ export class EditRecipe extends Component {
            title: this.state.title
         }
             this.props.updateRecipe(this.props.recipe._id, newRecipe)
-            this.props.getRecipe(this.props.param);
+            // this.props.getRecipe(this.props.param);
           }
 
-
+ 
           deleteStep(selectedID) {
             this.props.deleteRecipeStep(this.props.recipe._id, selectedID)
             

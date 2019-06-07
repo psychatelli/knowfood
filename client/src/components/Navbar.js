@@ -33,7 +33,7 @@ class Navbars extends Component {
         </li>
 
         <li className="nav-item">
-          <a  href="#!" onClick={this.onLogoutClick.bind(this)}   className="nav-link" >
+          <a  href="#!" onClick={this.onLogoutClick.bind(this)}   className="nav-link">
             {/* <img
               className="rounded-circle"
               src={user.avatar}
@@ -80,7 +80,7 @@ class Navbars extends Component {
                   <nav className="grey darken-3">
                       <div className="nav-wrapper">
                         {/* <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo"><img style={{width:'140px'}} atl="logo"  src={logo} /></a> */}
-                        <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo">Skynet</a>
+                        <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo">I</a>
 
                         {!loading && (<Fragment> { isAuthenticated ? authLinks : guestLinks } </Fragment>)} 
                       </div>
