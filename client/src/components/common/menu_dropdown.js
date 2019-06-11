@@ -53,7 +53,7 @@ class Menu_dropdown extends React.Component {
  
         render() {
             const { anchorEl } = this.state;
-            const {deleteItem, editContent, title} = this.props;
+            const {deleteItem, editContent, title, authLoding, itemUser, authUserId} = this.props;
 
  
         return (
@@ -67,7 +67,7 @@ class Menu_dropdown extends React.Component {
                     <Menu title={title} id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
                         <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> Share  </MenuItem>
                         <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.Edit}> Edit </MenuItem>
-                        <MenuItem  selected={2 === this.state.selectedIndex} onClick={this.DeleteItem}> Delete </MenuItem>
+
                     </Menu>
                 </div>
     );

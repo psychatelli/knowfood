@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getRecipes, addRecipe, deleteRecipe, getRecipe } from '../actions/recipesAction';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-
+import Moment from 'react-moment'
 import CircleButton from '../components/common/circleButton';
 import Menu_dropdown from '../components/common/menu_dropdown';
 import EditableInput from '../components/common/editableInput';
@@ -75,29 +75,36 @@ export class Recipies extends Component {
 
 
       render() {
-      const { recipes, classes } = this.props;
+      const { recipes, classes, auth } = this.props;
       
   
 
 
-    const NotesIcon = (
-      <Button><i  className="Opendrawer">note</i> Notes</Button>
-    )
     const Recipes = recipes.map((item) => (
       <div className='Card RecipeCard'>
           <div className='SpaceBetween'>
               <div>         
                 <h5> {item.title} </h5>
+                <span> {item.username} </span>
+                <span> <Moment format='YYY/MM/DD'>{item.date}</Moment> </span> 
+
               </div>
 
               <div> 
-                <Menu_dropdown  deleteItem={this.onDeleteClick.bind(this, item._id)} editContent={this.editRow.bind(this, item)}/>
+                <Menu_dropdown  
+                // deleteItem={this.onDeleteClick.bind(this, item._id)} 
+                editContent={this.editRow.bind(this, item)}/>
               </div>
           </div>
           <Link to={`/recipe/${item._id}`}>  
           <img src={item.thumbnail} /> 
           </Link>
+
+      
+
       </div>
+
+
     ))
 
     
@@ -131,9 +138,14 @@ export class Recipies extends Component {
   }
 }
 
+// Recipies.prototype = {
+//   recipes
+// }
+
 
 const mapStateToProps = state => ({
   recipes: state.recipes.items,
+  auth: state.auth
 })
 
 

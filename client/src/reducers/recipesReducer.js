@@ -1,13 +1,14 @@
-import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING
+import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING, RECIPE_ERROR
 } from '../actions/types';
-   
+
 
 const initialState = {
     items: [],
     steps: [],
     item: {},
     itemSelected: {},
-    loading: false
+    loading: true,
+    errors: {}
   };
 
   
@@ -52,8 +53,15 @@ const initialState = {
         case DELETE_RECIPE:
         return {
            ...state,
-          item: action.payload,
+          items: state.items.filter(recipe => recipe._id !== action.payload)
         };
+        case RECIPE_ERROR:
+            console.log(`DELETE RECIPE REDUCER ${action.payload}`)
+          return{
+            ...state,
+            errors: action.payload,
+            loading: false
+          };
 
         case UPDATE_RECIPE:
         // console.log(`RECUDER ${JSON.stringify(state)}`); 

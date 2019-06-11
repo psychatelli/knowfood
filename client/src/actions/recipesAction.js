@@ -1,23 +1,28 @@
 import axios from 'axios';
-import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS } from './types';
+import { setAlert } from './alert';
+import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR } from './types';
 
 
 
 
 
-export const getRecipes = () => dispatch => {
+export const getRecipes = () => async dispatch => {
 
-    axios
-      .get('/api/recipe')
-      .then(res =>
-        dispatch({
-          type: GET_RECIPES,
-          payload: res.data
-        })
-      )
+    try {
+      const res = await axios.get('/api/recipe');
+      dispatch({
+        type: GET_RECIPES,
+        payload: res.data
+      })
+    } catch(err) {
+      dispatch({
+        type: RECIPE_ERROR,
+        payload: {msg: err.response.statusText, status: err.response.status },
+      })
+    }
+  }
 
-      
-  };
+
 
   export const getRecipe = id => dispatch => {
     dispatch(setRecipeLoading());
@@ -86,43 +91,94 @@ export const addRecipe = recipeData => dispatch => {
   };
 
   //Delete Recipe Step /step/:recipe_id/:step_id
-  export const deleteRecipeStep = (recipe_id, step_id) => dispatch => {
-    console.log(`deleteRecipeStep: ${recipe_id} ${step_id}`)
-    axios
-      .delete(`/api/recipe/step/${recipe_id}/${step_id}`)
-      .then(res =>
-        dispatch({
-          type: GET_RECIPE,
-          payload: res.data
-        }),
-      )
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
-        })
-      );
-  };
+  // export const deleteRecipeStep = (recipe_id, step_id) => dispatch => {
+  //   console.log(`deleteRecipeStep: ${recipe_id} ${step_id}`)
+  //   axios
+  //     .delete(`/api/recipe/step/${recipe_id}/${step_id}`)
+  //     .then(res =>
+  //       dispatch({
+  //         type: GET_RECIPE,
+  //         payload: res.data
+  //       }),
+  //     )
+  //     .catch(err =>
+  //       dispatch({
+  //         type: GET_ERRORS,
+  //         payload: err.response.data
+  //       })
+  //     );
+  // };
+
+  export const deleteRecipeStep = (recipe_id, step_id) => async dispatch => {
+
+    try {
+      const res = await axios.delete(`/api/recipe/step/${recipe_id}/${step_id}`);
+      dispatch({
+        type: GET_RECIPE,
+        payload: res.data
+      })
+    } catch(err) {
+      
+      // const errors = err.response.data.errors;
+
+      //   if(errors) {
+      //       errors.forEach(error => dispatch(setAlert(error.msg, 'danger') ))
+      //   }
+
+      dispatch({
+        type: RECIPE_ERROR,
+        payload: {msg: err.response.statusText, status: err.response.status },
+      })
+    }
+  }
+
+
+
+
 
 
 // Delete Recipe
-export const deleteRecipe = id => dispatch => {
-  axios
-    .delete(`/api/recipe/${id}`)
-    .then(res =>
-      dispatch({
-        type: DELETE_RECIPE,
-        payload: id
-      })
-    )
-    // .catch(err =>
-    //   dispatch({
-    //     type: GET_ERRORS,
-    //     payload: err.response.data
-    //   })
-    // );
+// export const deleteRecipe = id => dispatch => {
+ 
+//   axios
+//     .delete(`/api/recipe/${id}`)
+//     .then(res =>
+//       dispatch({
+//         type: DELETE_RECIPE,
+//         payload: res.data
+//       })
+//     )
+//     // .catch(err =>
+//     //   dispatch({
+//     //     type: GET_ERRORS,
+//     //     payload: err.response.data
+//     //   })
+//     // );
 
-};
+// };
+
+
+export const deleteRecipe = (id) => async dispatch => {
+
+  try{
+    const res = await axios.delete(`/api/recipe/${id}`);
+    dispatch({
+      type: DELETE_RECIPE,
+      payload: res.data
+    });
+    dispatch(setAlert('Post Removed', 'success'))
+
+  }catch(err){
+    dispatch({
+      type: RECIPE_ERROR,
+      payload: {msg: err.response.statusText, status: err.response.status },
+      loading: false
+    })
+ 
+
+  }
+}
+
    
   
 // Update Recipe

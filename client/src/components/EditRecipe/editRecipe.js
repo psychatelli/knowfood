@@ -3,6 +3,7 @@ import { updateRecipe, getRecipe, addRecipeStep, deleteRecipeStep } from '../../
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Button from '@material-ui/core/Button';
 
 import RecipeStepEdit from './recipeStepEdit';
 
@@ -94,10 +95,17 @@ export class EditRecipe extends Component {
     const Steps =  recipe.step.map(function (item, index) {
       return (
         <div  key={item._id} className='RecipeStepEdit'>
-            {/* <button onClick={() => { this.deleteStep(item._id)}} > Delete </button> */}
-            <button onClick={() => { this.deleteStep(item._id)}} > Delete </button>
 
+          <div className='SpaceBetween'> 
             <h6>STEP {index + 1}</h6>
+            <div size="small" onClick={() => { this.deleteStep(item._id)}} >
+            <h6>X</h6>
+            </div>
+          </div>
+
+
+
+            
             <input value={item.text} col='50' row='50'  />
 
             <img src={item.thumbnail}/>

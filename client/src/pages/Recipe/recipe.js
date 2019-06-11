@@ -14,6 +14,9 @@ import CircleButton from '../../components/common/circleButton';
 import NewStepPost from '../../components/NewStepPost/newStepPost';
 
 import Button from '@material-ui/core/Button';
+import Alert from '../../components/common/alert';
+import authReducer from '../../reducers/authReducer';
+
 
 const styles = {
   list: {
@@ -75,7 +78,7 @@ const styles = {
       onDeleteClick(id) {
         this.props.deleteRecipe(id);
         // this.props.history.push('/recipies');
-        // window.location.href = '/recipies';
+        //  window.location.href = '/recipies';
 
       }
 
@@ -129,7 +132,7 @@ const styles = {
 
 
   render() {
-    const { recipe, loading, classes } = this.props;
+    const { recipe, loading, classes, auth  } = this.props;
     let RecipeContent;
 
    
@@ -145,9 +148,12 @@ const styles = {
             <div className='SpaceBetween'>
                 <div> <h5> {recipe.title} </h5> </div>
 
+              
                 <div> 
-                <Menu_dropdown   deleteItem={this.onDeleteClick.bind(this, recipe._id)} editContent={this.editRow.bind(this, recipe)}/>
+                <Menu_dropdown   deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
                 </div>
+
+               
 
             </div>
 
@@ -159,13 +165,19 @@ const styles = {
             <p>Ingredients:</p> <p>{recipe.ingredients}</p>
             </div>
 
+            <div>
+                  comments
+                  {recipe.comments.length}
+                </div>
          </div>
 
 
-         <div className='SpaceBetween'>
-         <div>  </div>
-         <CircleButton color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
-
+         <div className=''>
+         {!auth.loading && recipe.user === auth.user._id && (
+            <center>
+                <CircleButton color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
+            </center>
+          )}
          </div>
 
 
@@ -182,6 +194,15 @@ const styles = {
             <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
             
             <div className={classes.DrawerContainer}>
+
+            {!auth.loading && recipe.user === auth.user._id && (
+               <div className='SpaceBetween'>
+                 <div> </div>
+                 <Button color="secondary" onClick={this.onDeleteClick.bind(this, recipe._id, )}>
+                  DELETE
+                </Button>
+                </div> 
+              )}
               <br/>
               <EditRecipe param={this.props.match.params.id} />
             </div>
@@ -196,17 +217,21 @@ const styles = {
   
     return (
       <div>
+        <Alert/>
         {RecipeContent}
       </div>
     )
   }
 }
 
-
+// Recipe.PropTypes = {
+//   deleteRecipe: PropTypes.func.isRequired
+// }
   
 
 const mapStateToProps = state => ({
     recipe: state.recipes.item,
+    auth: state.auth
   });
   
    export default connect(mapStateToProps, { deleteRecipe, getRecipe, addRecipeStep})(withStyles(styles)(Recipe));
