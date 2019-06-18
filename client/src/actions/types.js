@@ -27,6 +27,11 @@ export const AUTH_ERROR = 'AUTH_ERROR' //IF THE TOKEN DOES NOT MATCH
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS' 
 export const LOGIN_FAIL = 'LOGIN_FAIL' 
 
+export const GET_PROFILES = 'GET_PROFILES'
+export const GET_PROFILE = 'GET_PROFILE'
+export const PROFILE_LOADING = 'PROFILE_LOADING'
+export const PROFILE_ERROR = 'PROFILE_ERROR'
+
 export const LOGOUT = 'LOGOUT' 
 
 

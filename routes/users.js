@@ -82,10 +82,8 @@ jwt.sign(payload, global.gConfig.jwtSecret, {expiresIn: 360000 }, (err, token) =
 
 
 
-// router.get('/', (req, res) => {
-//   console.log(req.body)
-//   res.send('user Route')
-// })
+
+
  
 
 

@@ -1,0 +1,28 @@
+version: '3'
+services: 
+  react:  #name of the first service. Also is container name
+    image: knowfood_react
+    container_name: KnowFood_React
+    build: client
+    # networks:
+    #   - knowfood_app
+    ports: 
+      - '3000:3000' #specify port mapping
+    links: 
+      - app
+  app:
+    image: knowfood_app
+    container_name: KnowFood_Express
+    restart: always
+    build: .
+    # networks:
+    #   - knowfood_app
+    ports:
+      - '5000:5000'
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'

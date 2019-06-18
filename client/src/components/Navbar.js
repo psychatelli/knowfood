@@ -22,7 +22,7 @@ class Navbars extends Component {
       
         <li className="nav-item">
           <Link className="nav-link" to="/profiles">
-            Members
+            Profiles
           </Link>
         </li> 
 
@@ -52,7 +52,7 @@ class Navbars extends Component {
       <ul  className="right hide-on-med-and-down">
       <li className="nav-item">
           <Link className="nav-link" to="/profiles">
-            Agents
+            Profiles
           </Link>
         </li> 
         <li className="nav-item">

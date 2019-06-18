@@ -2,9 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose')
-// const bodyParser = require('body-parser'); // will allow me to take requests from the body, such as post requests(e.g.)
-const passport = require('passport');
-const path = require('path');
+
 const config = require('./config/config');
 
 const users = require('./routes/users');
@@ -13,9 +11,8 @@ const auth = require('./routes/auth');
 const profile = require('./routes/profile');
 
 
-mongoose.connect(global.gConfig.database, { useNewUrlParser: true, useCreateIndex: true } );
+mongoose.connect(global.gConfig.database, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false } );
 
-// mongoose.connect(global.gConfig.database);
 let db = mongoose.connection;
 
 //Check connection
@@ -31,9 +28,7 @@ db.on('error', function(err){
 
 const app = express();
 
-//boddyparser Middleware
-// app.use(bodyParser.urlencoded({extended: false}));
-// app.use(bodyParser.json());
+
 app.use(express.json({extended: false}));
 
  

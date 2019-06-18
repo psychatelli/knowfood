@@ -25,5 +25,45 @@ router.get('/me', auth, async (req, res) => {
 
 
 
+// @route   GET api/profile/all
+// @desc    Get all profiles
+// @access  Public
+router.get('/all', async (req, res) => {
+    try{
+        const users = await User.find({}, 'username avatar')
+        
+        if(!users){
+            return res.status(400).json({msg: 'There is no profile for this user'});
+        }
+        res.json(users)
+
+    } catch(err){
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
+});
+
+
+// @route   GET api/profile/:id
+// @desc    Get one profiles
+// @access  Public
+router.get('/:id', async (req, res) => {
+    
+    try{
+        const user = await User.findOne({id: req.param.id}).select("-password")   
+        if(!user){
+            return res.status(400).json({msg: 'There is no profile for this user'});
+        }
+        res.json(user)
+
+    } catch(err){
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
+});
+
+
+
+
 
 module.exports = router
