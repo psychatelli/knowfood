@@ -2,9 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose')
-
 const config = require('./config/config');
-
 const users = require('./routes/users');
 const recipes = require('./routes/recipe');
 const auth = require('./routes/auth');

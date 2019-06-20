@@ -119,7 +119,7 @@ router.get('/:id', auth, async (req, res) => {
 
               try {
                 const user = await User.findById(req.user.id).select('-password');
-
+                    
                 const newRecipe = new Recipe({
                   thumbnail: req.body.thumbnail,
                   title: req.body.title,
