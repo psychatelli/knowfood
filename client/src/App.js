@@ -17,7 +17,8 @@
   import Login from './pages/auth/Login';
   import Landing from './pages/landing';
   import Profiles from './pages/profiles';
-  
+  import Profile from './pages/profile';
+
 if(localStorage.token){
   setAuthToken(localStorage.token)
 }
@@ -62,6 +63,12 @@ const App = () => {
                 <Switch>
                   <Route exact path="/profiles" component={Profiles} />
                 </Switch>
+
+                <Switch>
+                  <Route exact path="/profiles/:id" component={Profile} />
+                </Switch>
+
+
 
 
               </div>

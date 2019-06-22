@@ -1,4 +1,4 @@
-import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING, RECIPE_ERROR
+import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING, RECIPE_ERROR, GET_USERS_RECIPES
 } from '../actions/types';
 
 
@@ -24,6 +24,7 @@ const initialState = {
         };
 
         case GET_RECIPES:
+        case GET_USERS_RECIPES:  
         return{
             ...state,
             items: action.payload,

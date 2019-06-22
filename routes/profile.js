@@ -47,10 +47,12 @@ router.get('/all', async (req, res) => {
 // @route   GET api/profile/:id
 // @desc    Get one profiles
 // @access  Public
+
 router.get('/:id', async (req, res) => {
-    
+    console.log(`Your user ${User}`)
+
     try{
-        const user = await User.findOne({id: req.param.id}).select("-password")   
+        const user = await User.findOne({_id: req.params.id}).select("-password")   
         if(!user){
             return res.status(400).json({msg: 'There is no profile for this user'});
         }
@@ -60,7 +62,10 @@ router.get('/:id', async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server Error')
     }
+
 });
+
+
 
 
 

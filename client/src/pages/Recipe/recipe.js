@@ -2,7 +2,7 @@ import React, { Component, PureComponent } from 'react'
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { getRecipe, deleteRecipe, addRecipeStep} from '../../actions/recipesAction';
+import { getRecipe, deleteRecipe, addRecipeStep, selectedRecipe} from '../../actions/recipesAction';
 import { withStyles } from '@material-ui/core/styles';
 import Spinner from '../../components/common/spinner';
 import Step from './step';
@@ -12,6 +12,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Menu_dropdown from '../../components/common/menu_dropdown';
 import CircleButton from '../../components/common/circleButton';
 import NewStepPost from '../../components/NewStepPost/newStepPost';
+import Moment from 'react-moment'
 
 import Button from '@material-ui/core/Button';
 import Alert from '../../components/common/alert';
@@ -83,7 +84,6 @@ const styles = {
       }
 
       editRow = (recipe) =>{
-        // this.props.selectedRecipe(recipe);
         this.MytoggleDrawer()
       }
 
@@ -145,30 +145,52 @@ const styles = {
 
         <h1> {this.state.updateStep} </h1>
         <div className='Recipe_header'>  
-            <div className='SpaceBetween'>
-                <div> <h5> {recipe.title} </h5> </div>
 
-              
-                <div> 
-                <Menu_dropdown   deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
+            <div className=' SpaceBetween'>
+                <div className='Info'>
+                  <div> <img className='Avatar' src={recipe.avatar} /> </div>
+                  <div>  {recipe.username} </div>
+                  <div className='Date'> <Moment format='MM/YYYY'>{recipe.date}</Moment> </div> 
                 </div>
 
-               
+                <div>
+                {!auth.loading && recipe.user === auth.user._id ? (
+                <Menu_dropdown   deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
+             
+                ) : (
+                        <p>No</p>
+                      )}
+                </div>
 
+            </div> 
+
+            
+
+
+            <div className='SpaceBetween Recipe_Details'>
+                <div> <h5> {recipe.title} </h5> </div>
+
+                <div> 
+                  
+                
+
+               
+                
+                </div>
             </div>
 
             <div>
-              <img src={recipe.thumbnail} width='100'/>
+              <img src={recipe.thumbnail} width='100%'/>
             </div>
 
             <div> 
-            <p>Ingredients:</p> <p>{recipe.ingredients}</p>
+              <p>Ingredients:</p> <p>{recipe.ingredients}</p>
             </div>
 
             <div>
-                  comments
-                  {recipe.comments.length}
-                </div>
+              comments
+              {recipe.comments.length}
+            </div>
          </div>
 
 

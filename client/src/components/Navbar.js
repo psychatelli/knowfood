@@ -80,7 +80,7 @@ class Navbars extends Component {
                   <nav className="grey darken-3">
                       <div className="nav-wrapper">
                         {/* <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo"><img style={{width:'140px'}} atl="logo"  src={logo} /></a> */}
-                        <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo">I</a>
+                        <a style={{paddingLeft: '10px', paddingTop: '5px'}} href="/dashboard" className="brand-logo">KnowFood</a>
 
                         {!loading && (<Fragment> { isAuthenticated ? authLinks : guestLinks } </Fragment>)} 
                       </div>

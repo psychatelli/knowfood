@@ -26,7 +26,6 @@ const initialState = {
         };
   
         case GET_PROFILE:
-        //  console.log(`Reducer Recipe: ${...state}
         return{
             ...state,
             item: action.payload,

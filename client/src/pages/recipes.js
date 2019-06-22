@@ -83,11 +83,14 @@ export class Recipies extends Component {
     const Recipes = recipes.map((item) => (
       <div className='Card RecipeCard'>
           <div className='SpaceBetween'>
-              <div>         
-                <h5> {item.title} </h5>
-                <span> {item.username} </span>
-                <span> <Moment format='YYY/MM/DD'>{item.date}</Moment> </span> 
+              <div >  
+              <h5> {item.title} </h5>
 
+                <div className='Info'>
+                  <div> <img className='Avatar' src={item.avatar} /> </div>
+                  <div>  {item.username} </div>
+                </div> 
+                      
               </div>
 
               <div> 
@@ -99,12 +102,7 @@ export class Recipies extends Component {
           <Link to={`/recipe/${item._id}`}>  
           <img src={item.thumbnail} /> 
           </Link>
-
-      
-
       </div>
-
-
     ))
 
     

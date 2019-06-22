@@ -67,6 +67,29 @@ router.get('/:id', auth, async (req, res) => {
 })
 
 
+ // @route POST api/recipe
+// @route Get recipes for specific user
+// @route Public
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const recipe = await Recipe.find({user: req.params.userId});
+ 
+    if(!recipe) {
+      return res.status(404).json({ msg: 'No recipies created yet:('})
+    }
+
+    res.json(recipe)
+
+  }catch(err){
+    console.error(err.message)
+    if(err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Recipe not found'})
+    }
+    res.status(500).send('Recipe not found')
+
+  }
+})
+
 
  // @route POST api/recipe
 // @route Post a recipe

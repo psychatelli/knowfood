@@ -6580,7 +6580,7 @@ input[type=range]::-ms-thumb {
 .medium_gray_opacity, .leftNav li:hover {
   background: rgba(40, 44, 42, 0.562); }
 
-.gray_font, h3, .imgUploadBtn {
+.gray_font, .Info div, h3, .imgUploadBtn {
   color: gray; }
 
 .wittwer_blue_font {
@@ -6651,6 +6651,14 @@ input[type=range]::-ms-thumb {
   text-transform: uppercase;
   font-size: 15px; }
 
+.Info {
+  display: flex;
+  align-items: center; }
+  .Info div {
+    margin-right: 5px; }
+  .Info .Date {
+    font-size: 10px; }
+
 .RecipeStepEdit {
   border: solid thin #dedcdc;
   border-radius: 10px;
@@ -6669,6 +6677,10 @@ input[type=range]::-ms-thumb {
   background: white;
   padding: 10px;
   margin: 25px 0px; }
+
+.Recipe_Details {
+  margin-top: 5px;
+  border-top: solid thin lightgray; }
 
 body {
   overflow-x: hidden; }
@@ -6713,6 +6725,10 @@ h3 {
   margin: 10px 0px 10px 0px;
   background: white;
   border-radius: 10px; }
+
+.Avatar {
+  border-radius: 50%;
+  width: 30px; }
 
 .LeftCol {
   width: 400px; }

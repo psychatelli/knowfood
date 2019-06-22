@@ -65,9 +65,8 @@ class Menu_dropdown extends React.Component {
                     </List>
  
                     <Menu title={title} id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
-                        <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> Share  </MenuItem>
+                        <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> Share </MenuItem>
                         <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.Edit}> Edit </MenuItem>
-
                     </Menu>
                 </div>
     );

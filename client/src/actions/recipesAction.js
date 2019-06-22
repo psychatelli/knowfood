@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR } from './types';
+import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR, GET_USERS_RECIPES } from './types';
 
 
 
@@ -42,12 +42,25 @@ export const getRecipes = () => async dispatch => {
       ); 
   };
 
-  // export const getRecipe = recipeData => dispatch => {
-  //   dispatch({
-  //     type: SELECTED_RECIPE,
-  //     payload: recipeData
-  //   })
-  // };
+
+
+export const getUsersRecipes = id => dispatch => {
+    dispatch(setRecipeLoading());
+    axios
+      .get(`/api/recipe/user/${id}`)
+      .then(res =>
+        dispatch({
+          type: GET_USERS_RECIPES,
+          payload: res.data
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: null
+        })
+      ); 
+  };
 
 
   // Add Recipe
@@ -110,7 +123,6 @@ export const addRecipe = recipeData => dispatch => {
   // };
 
   export const deleteRecipeStep = (recipe_id, step_id) => async dispatch => {
-
     try {
       const res = await axios.delete(`/api/recipe/step/${recipe_id}/${step_id}`);
       dispatch({
@@ -127,13 +139,10 @@ export const addRecipe = recipeData => dispatch => {
 
       dispatch({
         type: RECIPE_ERROR,
-        payload: {msg: err.response.statusText, status: err.response.status },
+        payload: { msg: err.response.statusText, status: err.response.status },
       })
     }
   }
-
-
-
 
 
 
@@ -174,15 +183,12 @@ export const deleteRecipe = (id) => async dispatch => {
       payload: {msg: err.response.statusText, status: err.response.status },
       loading: false
     })
- 
-
   }
 }
 
    
-  
 // Update Recipe
-export const updateRecipe = (recipeId, recipeData ) => dispatch => {
+export const updateRecipe = (recipeId, recipeData) => dispatch => {
   axios
     .put(`/api/recipe/${recipeId}`, recipeData)
     .then(res =>
@@ -190,11 +196,7 @@ export const updateRecipe = (recipeId, recipeData ) => dispatch => {
         type: UPDATE_RECIPE,
         payload: res.data
       })
-      
     )
-
-  
-
     // .catch(err =>
     //   dispatch({
     //     type: GET_ERRORS,
@@ -202,8 +204,6 @@ export const updateRecipe = (recipeId, recipeData ) => dispatch => {
     //   })
     // );
 };
-
-
 
 
 
