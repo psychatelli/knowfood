@@ -6692,7 +6692,7 @@ body {
   border-radius: 5px;
   margin: 10px 0px; }
 
-.Shadow, .Card {
+.Shadow, .Card, .Comment {
   -webkit-box-shadow: 1px 1px 13px 0px #a399a3;
   -moz-box-shadow: 1px 1px 13px 0px #a399a3;
   box-shadow: 1px 1px 13px 0px #a399a3; }
@@ -6729,6 +6729,11 @@ h3 {
 .Avatar {
   border-radius: 50%;
   width: 30px; }
+
+.Comment {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px; }
 
 .LeftCol {
   width: 400px; }

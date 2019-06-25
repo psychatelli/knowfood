@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-class Menu_dropdown extends React.Component {
+class Menu_dropdownUser extends React.Component {
 
 // const Menu_dropdown = ({ name, value, error, info, onChange, options }) => {
     
@@ -66,6 +66,7 @@ class Menu_dropdown extends React.Component {
  
                     <Menu title={title} id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
                         <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> Share </MenuItem>
+                        <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.Edit}> Edit </MenuItem>
                     </Menu>
                 </div>
     );
@@ -73,7 +74,7 @@ class Menu_dropdown extends React.Component {
 }
 
 
-  Menu_dropdown.propTypes = {
+Menu_dropdownUser.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     info: PropTypes.string,
@@ -82,4 +83,4 @@ class Menu_dropdown extends React.Component {
     options: PropTypes.array.isRequired
   };
   
-  export default Menu_dropdown;
+  export default Menu_dropdownUser;

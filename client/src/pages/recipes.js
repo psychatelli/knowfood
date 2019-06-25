@@ -77,7 +77,8 @@ export class Recipies extends Component {
       render() {
       const { recipes, classes, auth } = this.props;
       
-  
+      console.log(`PERSON LOGEDIN ${JSON.stringify(auth.user)}`)
+
 
 
     const Recipes = recipes.map((item) => (

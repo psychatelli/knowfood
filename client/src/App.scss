@@ -82,6 +82,14 @@ h3 {
 
 }
 
+.Comment {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    @extend .Shadow;
+
+}
+
 .LeftCol {
     width: 400px;
 }

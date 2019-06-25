@@ -342,28 +342,48 @@ Recipe.findOneAndUpdate(
     }
   )
 
-  // Recipe.findOneAndUpdate(
-  //   { _id : recipe_id, "step._id" : step_id }, 
-  //   { $set: newFields },
-  //   {new: true}, 
-  //   (err, recipe) => {
-  //   if (err) return res.status(500).send(err);
-  //   return res.send(recipe);
-  //   }
-  // )
+  });
 
 
+
+
+
+// @route POST api/recipe/comment/:recipe_id
+// @route post a step
+// @route Public
  
-  
 
- 
+router.post('/comment/:recipe_id', auth, async (req, res) => {
   
-  
+    try {
+      const post = await Recipe.findById(req.params.recipe_id)
+
+      const newComment = {
+        text: req.body.text,
+        username: req.body.username,
+        avatar: req.body.avatar,
+        user: req.user.id
+    } 
+
+    //Add to comments array
+    post.comments.unshift(newComment);
+
+    //save
+    post.save().then(post => res.json(post))
+
+      
+    }catch(err) {
+      console.error(err.message)
+      res.status(500).send('Server Error - Post Recipe')
+    }
+            
 
   });
 
 
 
+
+  
 
 // @route   DELETE api/recipe/step/:id/:step_id
 // @desc    Remove comment from post

@@ -6,6 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 
 import RecipeStepEdit from './recipeStepEdit';
+import Comments from './comments';
 
 export class EditRecipe extends Component {
     constructor(props) {
@@ -134,6 +135,8 @@ export class EditRecipe extends Component {
       )
       
     }.bind(this))
+
+
   
     return (
       <div>
@@ -142,8 +145,12 @@ export class EditRecipe extends Component {
             <label>TITLE</label> 
             <input  value={this.state.title} onChange={this.handleChange('title')} onBlur={() => {this.updateRecipe()}} />
             {Steps}
+
+            <Comments Comment={recipe.comments}/>
+
             <button>Submit</button>
         </form>
+
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR, GET_USERS_RECIPES } from './types';
+import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR, GET_USERS_RECIPES, ADD_COMMENT } from './types';
 
 
 
@@ -213,3 +213,29 @@ export const setRecipeLoading = () => {
     type: RECIPE_LOADING
   };
 };
+
+
+
+
+//Add Comment 
+ export const addComment = (recipeId, commentData) => async dispatch => {
+
+  try {
+    console.log(`your data: ${JSON.stringify(commentData)}`)
+    const res = await axios.post(`/api/recipe/comment/${recipeId}`, commentData);
+    dispatch({
+      type: GET_RECIPE,
+      payload: res.data
+    })
+
+  }catch(err){
+    dispatch({
+      type: RECIPE_ERROR,
+      payload: null,
+    })
+  }
+};
+
+
+
+

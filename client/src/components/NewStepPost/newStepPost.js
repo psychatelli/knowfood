@@ -52,12 +52,12 @@ export class NewStepPost extends Component {
 
 
   render() {
-      const { recipeId, changedProp, recipe, param, onSubmit, text, handleChange } = this.props;
+      const { recipeId, changedProp, recipe, param, onSubmit, text, handleChange, name } = this.props;
 
     return (
       <form onSubmit={onSubmit} className={this.props.ClassName}>
         <div className='Card'>
-            <input name='Instructions' placeholder='Add Step Instructions' value={text} onChange={handleChange}  />
+            <input name={name} placeholder='Add Step Instructions' value={text} onChange={handleChange}  />
             {/* <button type="submit">Add </button>  */}
             <Button onClick={this.props.Close} type="submit" variant="contained">Add</Button>
             <Button onClick={this.props.Close} variant="contained">Cancel </Button>

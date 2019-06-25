@@ -12,7 +12,6 @@
   import Recipe from './pages/Recipe/recipe';
   import { loadUser } from './actions/auth';
   import setAuthToken from './utils/setAuthToken';
-  // import Navbar from './components/Navbar';
   import Register from './pages/auth/Register';
   import Login from './pages/auth/Login';
   import Landing from './pages/landing';

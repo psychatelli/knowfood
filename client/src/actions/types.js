@@ -36,3 +36,7 @@ export const PROFILE_ERROR = 'PROFILE_ERROR'
 export const LOGOUT = 'LOGOUT' 
 
 
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+
+

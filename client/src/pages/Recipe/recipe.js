@@ -6,10 +6,12 @@ import { getRecipe, deleteRecipe, addRecipeStep, selectedRecipe} from '../../act
 import { withStyles } from '@material-ui/core/styles';
 import Spinner from '../../components/common/spinner';
 import Step from './step';
+import Comments from './comments';
+
 import EditRecipe from '../../components/EditRecipe/editRecipe';
 import Drawer from '@material-ui/core/Drawer';
 // import SingleRecipe from '../../components/SingleRecipe/editRecipe';
-import Menu_dropdown from '../../components/common/menu_dropdown';
+import Menu_dropdownUser from '../../components/common/menu_dropdown_user';
 import CircleButton from '../../components/common/circleButton';
 import NewStepPost from '../../components/NewStepPost/newStepPost';
 import Moment from 'react-moment'
@@ -42,6 +44,7 @@ const styles = {
         active: true,
         right: false,
         text: '',
+        comment: '',
         thumbnail: 'https://photos.smugmug.com/Test/i-W5SXVkM/0/1d663a9e/S/fettuccine-S.jpg',
       }
       // this.onSubmit = this.onSubmit.bind(this);
@@ -106,11 +109,11 @@ const styles = {
 
       onSubmit(e) {
         e.preventDefault();
-        const AddedStep= {
+        const newStep= {
           text: this.state.text,
           thumbnail: this.state.thumbnail
         }
-          this.props.addRecipeStep(this.props.match.params.id, AddedStep);
+          this.props.addRecipeStep(this.props.match.params.id, newStep);
   
 
           this.setState({ 
@@ -121,14 +124,8 @@ const styles = {
 
 
         }
-  
-      
-  
-      handleChange = e => {
-        this.setState({
-          text: e.target.value
-          })
-        }
+
+       
 
 
   render() {
@@ -155,7 +152,7 @@ const styles = {
 
                 <div>
                 {!auth.loading && recipe.user === auth.user._id ? (
-                <Menu_dropdown   deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
+                <Menu_dropdownUser   deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
              
                 ) : (
                         <p>No</p>
@@ -203,14 +200,17 @@ const styles = {
          </div>
 
 
-        <NewStepPost handleChange={this.handleChange} text={this.state.text} 
+        <NewStepPost name='text' handleChange={this.handleChange} text={this.state.text} 
         onSubmit={this.onSubmit.bind(this)}
         param={this.props.match.params.id}   ClassName={ this.state.active ? "HideInput" : "ShowInput" } Close={() => this.setState({active: !this.state.active})} />
 
       
 
-        
+
         <Step Step={recipe.step}/>
+        
+        <Comments param={this.props.match.params.id} Comment={recipe.comments}/>
+
 
         <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
             <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
@@ -226,7 +226,7 @@ const styles = {
                 </div> 
               )}
               <br/>
-              <EditRecipe param={this.props.match.params.id} />
+              <EditRecipe param={recipe._id} />
             </div>
 
 
