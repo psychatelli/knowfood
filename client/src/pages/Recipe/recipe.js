@@ -46,6 +46,7 @@ const styles = {
         text: '',
         comment: '',
         thumbnail: 'https://photos.smugmug.com/Test/i-W5SXVkM/0/1d663a9e/S/fettuccine-S.jpg',
+        showStatus: ''
       }
       // this.onSubmit = this.onSubmit.bind(this);
     }
@@ -125,14 +126,30 @@ const styles = {
 
         }
 
-       
+        handleChange = (e) => {
+          this.setState({
+            [e.target.name]: e.target.value
+            })
+          }
 
 
   render() {
     const { recipe, loading, classes, auth  } = this.props;
-    let RecipeContent;
 
-   
+
+        {!auth.loading && recipe.user === auth.user._id ? (
+        this.setState({ 
+          showStatus : 'Show',
+          // thumbnail : '',
+        })
+        ) : (
+        this.setState({ 
+            showStatus : 'Hide',
+            // thumbnail : '',
+          })
+        )}
+
+    let RecipeContent;
 
     if (recipe === null || loading || Object.keys(recipe).length === 0) {
       RecipeContent = <Spinner/>;
@@ -209,7 +226,7 @@ const styles = {
 
         <Step Step={recipe.step}/>
         
-        <Comments param={this.props.match.params.id} Comment={recipe.comments}/>
+        <Comments param={recipe._id} Comment={recipe.comments} ShowClass={ this.state.showStatus}/>
 
 
         <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
@@ -249,7 +266,7 @@ const styles = {
 // Recipe.PropTypes = {
 //   deleteRecipe: PropTypes.func.isRequired
 // }
-  
+   
 
 const mapStateToProps = state => ({
     recipe: state.recipes.item,

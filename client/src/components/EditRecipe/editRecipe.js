@@ -22,14 +22,14 @@ export class EditRecipe extends Component {
           stepThumbnail: '',
           StepId: '',
           recipeId: this.props.recipe._id,
+          showStatus: ''
  
         }
         this.handleChange = this.handleChange.bind(this);
         //  this.updateRecipe = this.updateRecipe.bind(this)
 
         this.onSubmit = this.onSubmit.bind(this)
-        this.deleteStep = this.deleteStep.bind(this);
-
+ 
 
     }
 
@@ -52,8 +52,6 @@ export class EditRecipe extends Component {
            title: this.state.title
         }
             this.props.updateRecipe(this.props.recipe._id, newRecipe)
-            // this.props.getRecipe(this.props.param);
-            console.log('You are firing update')
         }
 
 
@@ -64,7 +62,6 @@ export class EditRecipe extends Component {
     
           array[index][evt.target.name] = evt.target.value;
           let newObj = {...this.state.TheRecipe}
-          //  console.log(`YOUR OBJ ${newObj}`)
     
         this.setState({
           TheRecipe: newObj
@@ -73,20 +70,23 @@ export class EditRecipe extends Component {
     }
 
           updateRecipeStep() {
-          //   const newStateContent = this.state.TheRecipe;
-          // let StepArray = newStateContent.step.slice() // create mutable copy of the array
           let NewRecipe =  this.state.TheRecipe
           this.props.updateRecipe(this.props.recipe._id, this.state.TheRecipe)
-
-            console.log(`YOUR updateRecipeStep ${JSON.stringify(this.state.TheRecipe)}`)
-
             }
 
  
           deleteStep(selectedID) {
             this.props.deleteRecipeStep(this.props.recipe._id, selectedID)
             
+
           }
+
+          // componentWillReceiveProps(nextProps){
+          //   if(nextProps.recipe !== this.props.recipe){
+          //     this.props.getRecipe(this.props.param);
+
+          //   }
+          // }
 
 
         onSubmit(e) {
@@ -97,24 +97,15 @@ export class EditRecipe extends Component {
               this.props.updateRecipe(EditedRecipe);
           }
 
-         
-         
- 
-        //  handleChange = (e, index,) => {
-        //   let array = this.state.car.features.slice() // create mutable copy of the array
-        //   array[index] = e.target.value // set the value of the feature at the index in question to e.target.value
-        //   const newObj = { ...this.state.car, features: array } // create a new object by spreading in the this.state.car and overriding features with our new array 
-        //   this.setState({ car: newObj }) // set this.state.car to our new object
-        // }
+  
 
          
  
   render() {
  
-    const { recipe, DeletePost, param } = this.props;
+    const { recipe, DeletePost, param , auth} = this.props;
     const {TheRecipe} = this.state
-   
-    console.log(`THE RECIPE: ${this.state.TheRecipe}`);
+ 
 
 
     const Steps =  TheRecipe.step.map(function (item, index) {
@@ -124,7 +115,7 @@ export class EditRecipe extends Component {
           <div className='SpaceBetween'> 
             <h6>STEP {index + 1}</h6>
             <div size="small" onClick={() => { this.deleteStep(item._id)}} >
-            <i style={{color: 'gray', size: '5'}} className="material-icons">close</i>
+            <i style={{color: 'gray', size: '5'}} className="material-icons Hand">close</i>
             </div>
           </div>
             
@@ -133,24 +124,22 @@ export class EditRecipe extends Component {
             <img src={item.thumbnail}/>
         </div>
       )
-      
     }.bind(this))
 
 
   
     return (
       <div>
-
         <form onSubmit={this.onSubmit}>
             <label>TITLE</label> 
             <input  value={this.state.title} onChange={this.handleChange('title')} onBlur={() => {this.updateRecipe()}} />
             {Steps}
+            <br/>
+            <h6>Comments</h6>
+            {/* <Comments Comment={recipe.comments}/> */}
+            <Comments param={recipe._id} Comment={recipe.comments} ShowClass={ this.state.showStatus}/>
 
-            <Comments Comment={recipe.comments}/>
-
-            <button>Submit</button>
         </form>
-
       </div>
     )
   }
@@ -158,7 +147,8 @@ export class EditRecipe extends Component {
 
  
 const mapStateToProps = state => ({
-    recipe: state.recipes.item
+    recipe: state.recipes.item,
+    auth: state.auth
 
   })
   

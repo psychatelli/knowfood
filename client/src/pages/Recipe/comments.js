@@ -30,11 +30,13 @@ class Comments extends Component {
       avatar: user.avatar
     }
 
-    this.props.addComment('5cfc22e34e64db8be5832267', newComment);
+    this.props.addComment(param, newComment);
     this.setState({ text: ''});
 }
 
+deleteComment() {
 
+}
 
 handleChange (e) {
   this.setState({
@@ -46,7 +48,7 @@ handleChange (e) {
 
   render() {
 
-const { Comment, param} = this.props;
+const { Comment, param, ShowClass} = this.props;
 const {text } = this.state;
 const { user } = this.props.auth;
 
@@ -54,11 +56,20 @@ const { user } = this.props.auth;
 var CommentItems = Comment.map((item) => {
     return (
         <div className='Comment'>
-                <div className='Info'>
-                  <div> <img className='Avatar' src={item.avatar} /> </div>
-                  <div>  {item.username} </div>
-                  <div className='Date'> <Moment format='MM/DD/YYYY'>{item.date}</Moment> </div> 
-                </div>
+                  <div className='SpaceBetween'>
+                      <div className='Info'>
+                        <div> <img className='Avatar' src={item.avatar} /> </div>
+                        <div>  {item.username} </div>
+                         <div className='Date'> <Moment format='MM/DD/YYYY'>{item.date}</Moment> </div> 
+                      </div>
+
+                      <div>
+                        <span className={ShowClass}>
+                            <i onClick={this.deleteComment} className="material-icons gray_font Hand">close</i>
+                        </span>
+                      </div>
+                  </div>
+
 
             <p>{item.text} </p>
         </div>

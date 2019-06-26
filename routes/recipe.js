@@ -287,6 +287,7 @@ router.delete('/step/:recipe_id/:step_id',
     Recipe.findById(req.params.recipe_id)
       .then(recipe => {
         // Check to see if comment exists
+
         if (
           recipe.step.filter(
             recipe => recipe._id.toString() === req.params.step_id
@@ -382,46 +383,39 @@ router.post('/comment/:recipe_id', auth, async (req, res) => {
 
 
 
+    router.delete('/comment/:recipe_id/:comment_id', auth, async (req, res) => { 
+        try{
+          const recipe = await  Recipe.findById(req.params.recipe_id);
 
-  
-
-// @route   DELETE api/recipe/step/:id/:step_id
-// @desc    Remove comment from post
-// @access  Private
-router.delete('/step/:recipe_id/:step_id',(req, res) => {
-      Recipe.findById(req.params.recipe_id)
-
-        .then(recipe => {
-          // Check to see if comment exists
 
           if (
-            recipe.step.filter(
-              step => step._id.toString() === req.params.step_id
+            recipe.comments.filter(
+              comment => comment._id.toString() === req.params.comment_id
             ).length === 0
           ) {
             return res
               .status(404)
-              .json({ Stepnotexists: 'Step does not exist' });
+              .json({ Commentnotexists: 'Step does not exist' });
           }
   
           // Get remove index
-          const removeIndex = recipe.step
+          const removeIndex = recipe.comments
             .map(item => item._id.toString())
-            .indexOf(req.params.step_id);
+            .indexOf(req.params.comment_id);
   
           // Splice comment out of array
-          recipe.step.splice(removeIndex, 1);
+          recipe.comments.splice(removeIndex, 1);
   
-          recipe.save().then(recipe => res.json(recipe));
-        })
-        .catch(err => res.status(404).json({ stepnotfound: 'No post found' }));
-    }
-  );
+           recipe.save()
+           res.json(recipe)
 
 
 
-    
-
+        }catch(err) {
+          console.error(err.message)
+          res.status(500).send('Server Error - Recipe Comment Not Deleted')
+        }
+    })
 
 
 module.exports = router;

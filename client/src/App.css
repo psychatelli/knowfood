@@ -6760,6 +6760,12 @@ h3 {
 .ShowInput {
   display: inline; }
 
+.Hide {
+  display: none; }
+
+.Hand {
+  cursor: pointer; }
+
 .imgUploadBtn {
   display: flex;
   justify-content: center;
