@@ -221,7 +221,6 @@ export const setRecipeLoading = () => {
  export const addComment = (recipeId, commentData) => async dispatch => {
 
   try {
-    console.log(`your data: ${JSON.stringify(commentData)}`)
     const res = await axios.post(`/api/recipe/comment/${recipeId}`, commentData);
     dispatch({
       type: GET_RECIPE,

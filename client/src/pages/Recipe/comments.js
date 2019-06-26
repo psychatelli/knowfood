@@ -70,11 +70,10 @@ var CommentItems = Comment.map((item) => {
         <div>
           <br/>
         <h6>Comments</h6>
-        <hr/>
           <form onSubmit={this.onSubmit.bind(this)}>
                   <input name='text' value={text} placeholder='Add Comment...' onChange={this.handleChange} />
           </form>
-
+          <br/>
           {CommentItems}
         </div>
       )
@@ -86,5 +85,5 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
- export default connect(mapStateToProps, { addComment})(Comments);
+ export default connect(mapStateToProps, {addComment})(Comments);
 
