@@ -8,7 +8,7 @@ import Spinner from '../../components/common/spinner';
 import Step from './step';
 import Comments from './comments';
 
-import EditRecipe from '../../components/EditRecipe/editRecipe';
+import EditRecipe from './EditRecipe/editRecipe';
 import Drawer from '@material-ui/core/Drawer';
 // import SingleRecipe from '../../components/SingleRecipe/editRecipe';
 import Menu_dropdownUser from '../../components/common/menu_dropdown_user';
@@ -46,7 +46,7 @@ const styles = {
         text: '',
         comment: '',
         thumbnail: 'https://photos.smugmug.com/Test/i-W5SXVkM/0/1d663a9e/S/fettuccine-S.jpg',
-        showStatus: ''
+        visibilityState: ''
       }
       // this.onSubmit = this.onSubmit.bind(this);
     }
@@ -137,17 +137,8 @@ const styles = {
     const { recipe, loading, classes, auth  } = this.props;
 
 
-        {!auth.loading && recipe.user === auth.user._id ? (
-        this.setState({ 
-          showStatus : 'Show',
-          // thumbnail : '',
-        })
-        ) : (
-        this.setState({ 
-            showStatus : 'Hide',
-            // thumbnail : '',
-          })
-        )}
+     {!auth.loading && recipe.user === auth.user._id ? ( this.setState({  visibilityState : 'Show' })  ) : ( this.setState({ visibilityState : 'Hide'  }))}
+
 
     let RecipeContent;
 
@@ -168,14 +159,8 @@ const styles = {
                 </div>
 
                 <div>
-                {!auth.loading && recipe.user === auth.user._id ? (
-                <Menu_dropdownUser   deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
-             
-                ) : (
-                        <p>No</p>
-                      )}
+                <Menu_dropdownUser Visibility={this.state.visibilityState}  deleteItem={this.onDeleteClick.bind(this, recipe._id, )} editContent={this.editRow.bind(this, recipe)}/>
                 </div>
-
             </div> 
 
             
@@ -183,14 +168,7 @@ const styles = {
 
             <div className='SpaceBetween Recipe_Details'>
                 <div> <h5> {recipe.title} </h5> </div>
-
-                <div> 
-                  
-                
-
-               
-                
-                </div>
+                <div>  </div>
             </div>
 
             <div>
@@ -198,22 +176,22 @@ const styles = {
             </div>
 
             <div> 
-              <p>Ingredients:</p> <p>{recipe.ingredients}</p>
+              <p>Ingredients:</p> 
+              <p>{recipe.ingredients}</p>
             </div>
 
             <div>
-              comments
-              {recipe.comments.length}
+              comments{recipe.comments.length}
             </div>
          </div>
 
 
          <div className=''>
-         {!auth.loading && recipe.user === auth.user._id && (
-            <center>
-                <CircleButton color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
+        
+            <center className={this.state.visibilityState}>
+                <CircleButton  color='primary' size='small' icon='add' Click={() => this.setState({active: !this.state.active})} /> 
             </center>
-          )}
+        
          </div>
 
 
@@ -226,7 +204,7 @@ const styles = {
 
         <Step Step={recipe.step}/>
         
-        <Comments param={recipe._id} Comment={recipe.comments} ShowClass={ this.state.showStatus}/>
+        <Comments param={recipe._id} Comment={recipe.comments} Visibility='Hide'/>
 
 
         <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
@@ -243,7 +221,7 @@ const styles = {
                 </div> 
               )}
               <br/>
-              <EditRecipe param={recipe._id} />
+              <EditRecipe param={recipe._id} Visibility={ this.state.visibilityState}/>
             </div>
 
 

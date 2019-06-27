@@ -7,7 +7,6 @@ import Moment from 'react-moment'
 import CircleButton from '../components/common/circleButton';
 import Menu_dropdown from '../components/common/menu_dropdown';
 import EditableInput from '../components/common/editableInput';
-import EditRecipe from '../components/EditRecipe/editRecipe';
 
 import NewRecipePost from '../components/NewRecipePost/newRecipePost';
 // import DrawerRight from '../components/common/drawerright';
@@ -96,7 +95,6 @@ export class Recipies extends Component {
 
               <div> 
                 <Menu_dropdown  
-                // deleteItem={this.onDeleteClick.bind(this, item._id)} 
                 editContent={this.editRow.bind(this, item)}/>
               </div>
           </div>
@@ -124,10 +122,9 @@ export class Recipies extends Component {
           <Drawer   anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
             <div tabIndex={0} role="button" onClick={this.toggleDrawer('right', false)}   onKeyDown={this.toggleDrawer('right', false)}></div>
             
-
+            <p> No Stuff here</p>
             <div className={classes.DrawerContainer}>
               <br/>
-              <EditRecipe />
             </div>
           </Drawer>
       </div>

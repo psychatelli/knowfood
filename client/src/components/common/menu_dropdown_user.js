@@ -49,11 +49,11 @@ class Menu_dropdownUser extends React.Component {
           this.props.editContent()
           this.handleClose()
 
-        }
+        } 
  
         render() {
             const { anchorEl } = this.state;
-            const {deleteItem, editContent, title, authLoding, itemUser, authUserId} = this.props;
+            const {deleteItem, editContent, title, authLoding, itemUser, authUserId, Visibility} = this.props;
 
  
         return (
@@ -66,7 +66,9 @@ class Menu_dropdownUser extends React.Component {
  
                     <Menu title={title} id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
                         <MenuItem  selected={0 === this.state.selectedIndex} onClick={this.handleClose}> Share </MenuItem>
-                        <MenuItem  selected={1 === this.state.selectedIndex} onClick={this.Edit}> Edit </MenuItem>
+                        <span className={Visibility}> 
+                        <MenuItem   selected={1 === this.state.selectedIndex} onClick={this.Edit}> Edit </MenuItem>
+                        </span>
                     </Menu>
                 </div>
     );
@@ -83,4 +85,4 @@ Menu_dropdownUser.propTypes = {
     options: PropTypes.array.isRequired
   };
   
-  export default Menu_dropdownUser;
+  export default Menu_dropdownUser; 

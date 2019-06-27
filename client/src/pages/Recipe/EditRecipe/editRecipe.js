@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { updateRecipe, getRecipe, addRecipeStep, deleteRecipeStep } from '../../actions/recipesAction';
+import { updateRecipe, getRecipe, addRecipeStep, deleteRecipeStep } from '../../../actions/recipesAction';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 
 import RecipeStepEdit from './recipeStepEdit';
-import Comments from './comments';
+import Comments from '../comments';
 
 export class EditRecipe extends Component {
     constructor(props) {
@@ -75,10 +75,9 @@ export class EditRecipe extends Component {
             }
 
  
-          deleteStep(selectedID) {
+          deleteStep(selectedID, index) {
+            this.state.TheRecipe.step.splice(index, 1)
             this.props.deleteRecipeStep(this.props.recipe._id, selectedID)
-            
-
           }
 
           // componentWillReceiveProps(nextProps){
@@ -103,7 +102,7 @@ export class EditRecipe extends Component {
  
   render() {
  
-    const { recipe, DeletePost, param , auth} = this.props;
+    const { recipe, DeletePost, param ,Visibility, auth} = this.props;
     const {TheRecipe} = this.state
  
 
@@ -114,7 +113,7 @@ export class EditRecipe extends Component {
 
           <div className='SpaceBetween'> 
             <h6>STEP {index + 1}</h6>
-            <div size="small" onClick={() => { this.deleteStep(item._id)}} >
+            <div size="small" onClick={() => { this.deleteStep(item._id, index)}} >
             <i style={{color: 'gray', size: '5'}} className="material-icons Hand">close</i>
             </div>
           </div>
@@ -135,9 +134,8 @@ export class EditRecipe extends Component {
             <input  value={this.state.title} onChange={this.handleChange('title')} onBlur={() => {this.updateRecipe()}} />
             {Steps}
             <br/>
-            <h6>Comments</h6>
             {/* <Comments Comment={recipe.comments}/> */}
-            <Comments param={recipe._id} Comment={recipe.comments} ShowClass={ this.state.showStatus}/>
+            <Comments param={recipe._id} Comment={recipe.comments} Visibility={Visibility}/>
 
         </form>
       </div>

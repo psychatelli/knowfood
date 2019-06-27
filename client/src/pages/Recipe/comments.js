@@ -48,7 +48,7 @@ handleChange (e) {
 
   render() {
 
-const { Comment, param, ShowClass} = this.props;
+const { Comment, param, Visibility} = this.props;
 const {text } = this.state;
 const { user } = this.props.auth;
 
@@ -64,13 +64,11 @@ var CommentItems = Comment.map((item) => {
                       </div>
 
                       <div>
-                        <span className={ShowClass}>
+                        <span className={Visibility}>
                             <i onClick={this.deleteComment} className="material-icons gray_font Hand">close</i>
                         </span>
                       </div>
                   </div>
-
-
             <p>{item.text} </p>
         </div>
      );
