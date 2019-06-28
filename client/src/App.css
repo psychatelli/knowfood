@@ -6743,6 +6743,12 @@ h3 {
 .MiddleCol {
   width: 500px; }
 
+.NewRecipeInputs {
+  display: grid;
+  margin-bottom: 10px; }
+  .NewRecipeInputs div {
+    margin-bottom: 5px; }
+
 .rightestCol {
   width: 400px;
   max-height: 100vh;
@@ -6772,7 +6778,7 @@ h3 {
   background: white;
   margin-top: 20px;
   padding: 10px;
-  display: flex; }
+  display: grid; }
 
 .imgUploadBtn {
   display: flex;

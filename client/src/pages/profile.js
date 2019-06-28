@@ -79,11 +79,11 @@ export class Profile extends Component {
         <div className="ProfileHeader">
           <div className='Info'>
             <div>  <img src={profile.avatar} style={{width: '50px', borderRadius: '50%'}} /> </div> 
-            <div> {profile.username}  </div>
             <p> <label>RECIPES</label> {recipes.length}</p> 
             <p> <label>FOLLOWERS</label>  {recipes.length}</p>
           </div>
-          
+          <div> {profile.username}  </div>
+
           
         </div>
           {Recipes}

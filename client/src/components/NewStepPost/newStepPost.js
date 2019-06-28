@@ -9,6 +9,7 @@ export class NewStepPost extends Component {
     super(props);
     this.state = {
       thumbnail: 'https://photos.smugmug.com/Test/i-W5SXVkM/0/1d663a9e/S/fettuccine-S.jpg',
+      selectedFile: ''
      
     }
     // this.handleChange = this.handleChange.bind(this);
@@ -34,6 +35,17 @@ export class NewStepPost extends Component {
        
       }
 
+      fileHandler = e => {
+        let File = e.target.files[0]
+        this.setState({
+          selectedFile: File
+        })
+
+        console.log(this.state.selectedFile)
+        console.log(this.state.selectedFile)
+
+      }
+
  
   render() {
       const { recipeId, changedProp, recipe, param, onSubmit, text, handleChange, name } = this.props;
@@ -41,9 +53,19 @@ export class NewStepPost extends Component {
     return (
       <form onSubmit={onSubmit} className={this.props.ClassName}>
         <div className='Card'>
-            <input name={name} placeholder='Add Step Instructions' value={text} onChange={handleChange}  />
+            <div className='NewRecipeInputs'>
+              <div> 
+                <input ref={fileInput => this.fileInput = fileInput} name={name} placeholder='Add Step Instructions' value={text} onChange={handleChange}  />
+                <button onClick={() => this.fileInput.click()}>Choose thumbnail</button>
+              </div>
+              <div> <input style={{display: 'none'}} type='file' onChange={this.fileHandler} /></div>
+            </div>
+
             <Button onClick={this.props.Close} type="submit" variant="contained">Add</Button>
             <Button onClick={this.props.Close} variant="contained">Cancel </Button>
+            
+            
+
         </div>
       </form>
     )
