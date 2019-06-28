@@ -9,8 +9,6 @@ const User = require('../models/user');
 const config = require('../config/config');
 
 
-
-
 //@route POST api/auth
 //@desc Test
 //@access Public
@@ -23,8 +21,6 @@ router.get('/', auth, async (req, res) => {
       res.status(500).send('Server Error 1')
     }
   })
-
-
 
 
 //@route POST api/auth
@@ -66,7 +62,10 @@ try {
       }
     }
 
-      jwt.sign(payload, global.gConfig.jwtSecret, {expiresIn: 360000 }, (err, token) => {
+
+  
+    
+      jwt.sign(payload, global.gConfig.jwtSecret, {expiresIn: 36000 }, (err, token) => {
           if(err) throw err;
           res.json({ token });
       })

@@ -6658,6 +6658,8 @@ input[type=range]::-ms-thumb {
     margin-right: 5px; }
   .Info .Date {
     font-size: 10px; }
+  .Info p {
+    margin: 0px 10px; }
 
 .RecipeStepEdit {
   border: solid thin #dedcdc;
@@ -6765,6 +6767,12 @@ h3 {
 
 .Hand {
   cursor: pointer; }
+
+.ProfileHeader {
+  background: white;
+  margin-top: 20px;
+  padding: 10px;
+  display: flex; }
 
 .imgUploadBtn {
   display: flex;

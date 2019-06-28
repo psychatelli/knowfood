@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { getRecipes, addRecipe, deleteRecipe, getRecipe } from '../actions/recipesAction';
+import { getRecipes, addRecipe, deleteRecipe, getRecipe, addLike, removeLike } from '../actions/recipesAction';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment'
@@ -40,6 +40,7 @@ export class Recipies extends Component {
           errors: {},
           active: true,
           right: false,
+          visibilityState: '',
         }
     }
 
@@ -74,9 +75,8 @@ export class Recipies extends Component {
 
 
       render() {
-      const { recipes, classes, auth } = this.props;
+      const { recipes, classes, auth, addLike, removeLike  } = this.props;
       
-      console.log(`PERSON LOGEDIN ${JSON.stringify(auth.user)}`)
 
 
 
@@ -92,8 +92,11 @@ export class Recipies extends Component {
                 </div> 
                       
               </div>
-
+ 
               <div> 
+              {/* <button onClick={e => addLike(item._id)}>  <i className="material-icons">favorite_border</i> {item.likes.length} </button> */}
+
+
                 <Menu_dropdown  
                 editContent={this.editRow.bind(this, item)}/>
               </div>
@@ -103,7 +106,7 @@ export class Recipies extends Component {
           </Link>
       </div>
     ))
-
+ 
     
     return (
       <div className='Grid_wrapper'>
@@ -142,8 +145,9 @@ export class Recipies extends Component {
 const mapStateToProps = state => ({
   recipes: state.recipes.items,
   auth: state.auth
+  
 })
 
 
-export default connect(mapStateToProps, {getRecipes, deleteRecipe, getRecipe})(withStyles(styles)(Recipies));
+export default connect(mapStateToProps, {getRecipes, deleteRecipe, getRecipe, addLike, removeLike })(withStyles(styles)(Recipies));
  

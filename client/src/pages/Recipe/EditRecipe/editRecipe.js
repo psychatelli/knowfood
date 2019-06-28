@@ -110,7 +110,6 @@ export class EditRecipe extends Component {
     const Steps =  TheRecipe.step.map(function (item, index) {
       return (
         <div  key={item._id} className='RecipeStepEdit'>
-
           <div className='SpaceBetween'> 
             <h6>STEP {index + 1}</h6>
             <div size="small" onClick={() => { this.deleteStep(item._id, index)}} >
@@ -136,7 +135,6 @@ export class EditRecipe extends Component {
             <br/>
             {/* <Comments Comment={recipe.comments}/> */}
             <Comments param={recipe._id} Comment={recipe.comments} Visibility={Visibility}/>
-
         </form>
       </div>
     )
@@ -147,7 +145,6 @@ export class EditRecipe extends Component {
 const mapStateToProps = state => ({
     recipe: state.recipes.item,
     auth: state.auth
-
   })
   
   export default connect(mapStateToProps, {updateRecipe, addRecipeStep, deleteRecipeStep, getRecipe})(EditRecipe)

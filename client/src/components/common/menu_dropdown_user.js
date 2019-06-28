@@ -59,7 +59,7 @@ class Menu_dropdownUser extends React.Component {
         return (
                 <div> 
                     <List>
-                        <i class="material-icons">favorite_border</i> 
+                        {/* <i class="material-icons">favorite_border</i>  */}
                         <a  aria-haspopup="true" aria-controls="lock-menu" onClick={this.handleClickListItem}>
                         <i className="material-icons">more_horiz</i></a>
                     </List>

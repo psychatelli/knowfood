@@ -61,10 +61,8 @@ export class Profile extends Component {
                 </div>
   
                 <div> 
-                  <Menu_dropdown  
-                  // deleteItem={this.onDeleteClick.bind(this, item._id)} 
-                //   editContent={this.editRow.bind(this, item)}
-                  />
+                {/* <i className="material-icons">favorite_border</i>  */}
+
                 </div>
             </div>
             <Link to={`/recipe/${item._id}`}>  
@@ -73,13 +71,21 @@ export class Profile extends Component {
         </div>
       ))
 
-
+ 
 
     
     return (
       <div className='Grid_wrapper'>
-       <h6>Recipes By: {profile.username} </h6>
-
+        <div className="ProfileHeader">
+          <div className='Info'>
+            <div>  <img src={profile.avatar} style={{width: '50px', borderRadius: '50%'}} /> </div> 
+            <div> {profile.username}  </div>
+            <p> <label>RECIPES</label> {recipes.length}</p> 
+            <p> <label>FOLLOWERS</label>  {recipes.length}</p>
+          </div>
+          
+          
+        </div>
           {Recipes}
 
 

@@ -1,4 +1,4 @@
-import { GET_RECIPES,DELETE_RECIPES,ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING, RECIPE_ERROR, GET_USERS_RECIPES, DELETE_COMMENT
+import { GET_RECIPES,DELETE_RECIPES, UPDATE_LIKES, ADD_RECIPE,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, RECIPE_LOADING, RECIPE_ERROR, GET_USERS_RECIPES, DELETE_COMMENT
 } from '../actions/types';
 
 
@@ -65,12 +65,17 @@ const initialState = {
           };
 
         case UPDATE_RECIPE:
-        // console.log(`RECUDER ${JSON.stringify(state)}`); 
-
         return {
            ...state,
            item: action.payload,
-          // items: state.items.filter(recipe => recipe._id !== action.payload)
+        };
+
+        case UPDATE_LIKES:
+        return {
+           ...state,
+           items: state.items.map(recipe => recipe._id === action.payload.id  ? { ...recipe, likes: action.payload.likes } : recipe ),
+          //  posts: state.posts.map(post =>   post._id === payload.id ? { ...post, likes: payload.likes } : post),
+           loading: false
         };
 
      

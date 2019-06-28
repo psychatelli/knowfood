@@ -357,7 +357,7 @@ Recipe.findOneAndUpdate(
 router.post('/comment/:recipe_id', auth, async (req, res) => {
   
     try {
-      const post = await Recipe.findById(req.params.recipe_id)
+      const recipe = await Recipe.findById(req.params.recipe_id)
 
       const newComment = {
         text: req.body.text,
@@ -367,10 +367,10 @@ router.post('/comment/:recipe_id', auth, async (req, res) => {
     } 
 
     //Add to comments array
-    post.comments.unshift(newComment);
+    recipe.comments.unshift(newComment);
 
     //save
-    post.save().then(post => res.json(post))
+    recipe.save().then(recipe => res.json(recipe))
 
       
     }catch(err) {
@@ -382,7 +382,10 @@ router.post('/comment/:recipe_id', auth, async (req, res) => {
   });
 
 
-
+// @route POST api/recipe/comment/:recipe_id/:comment_id
+// @route delete comment
+// @route Public
+ 
     router.delete('/comment/:recipe_id/:comment_id', auth, async (req, res) => { 
         try{
           const recipe = await  Recipe.findById(req.params.recipe_id);
@@ -416,6 +419,71 @@ router.post('/comment/:recipe_id', auth, async (req, res) => {
           res.status(500).send('Server Error - Recipe Comment Not Deleted')
         }
     })
+
+
+
+
+// @route PUT api/recipe/like/:recipeId
+// @route add like
+// @route Public
+
+
+router.put('/like/:recipeId', auth, async (req, res) => {
+  try {
+
+    const recipe = await Recipe.findById(req.params.recipeId);
+    // Check if the post has already been liked
+    if (
+      recipe.likes.filter(like => like.user.toString() === req.user.id).length > 0
+    ) {
+      return res.status(400).json({ msg: 'Recipe already liked' });
+    }
+
+    recipe.likes.unshift({ user: req.user.id });
+
+    await recipe.save();
+
+    res.json(recipe.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+
+
+// @route    PUT api/posts/unlike/:id
+// @desc     Like a post
+// @access   Private
+router.put('/unlike/:recipeId', auth, async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.recipeId);
+
+    // Check if the post has already been liked
+    if (
+      recipe.likes.filter(like => like.user.toString() === req.user.id).length ===
+      0
+    ) {
+      return res.status(400).json({ msg: 'recipe has not yet been liked' });
+    }
+
+    // Get remove index
+    const removeIndex = recipe.likes
+      .map(like => like.user.toString())
+      .indexOf(req.user.id);
+
+    recipe.likes.splice(removeIndex, 1);
+
+    await recipe.save();
+
+    res.json(recipe.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 
 module.exports = router;

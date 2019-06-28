@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import {GET_RECIPES, DELETE_RECIPES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR, GET_USERS_RECIPES, ADD_COMMENT } from './types';
+import {GET_RECIPES, DELETE_RECIPES, UPDATE_LIKES, ADD_RECIPE ,GET_RECIPE,DELETE_RECIPE,POST_STEP,DELETE_STEP, UPDATE_RECIPE, SELECTED_RECIPE, RECIPE_LOADING, GET_ERRORS, RECIPE_ERROR, GET_USERS_RECIPES, ADD_COMMENT } from './types';
 
 
 
@@ -235,6 +235,64 @@ export const setRecipeLoading = () => {
   }
 };
 
+
+//Delete Comment 
+export const deleteComment = (recipeId, commentId) => async dispatch => {
+
+  try {
+    const res = await axios.delete(`/api/recipe/comment/${recipeId}/${commentId}`);
+    dispatch({
+      type: GET_RECIPE,
+      payload: res.data
+    })
+
+  }catch(err){
+    dispatch({
+      type: RECIPE_ERROR,
+      payload: null,
+    })
+  }
+};
+
+
+
+
+//ADD like 
+export const addLike = (recipeId) => async dispatch => {
+
+  try {
+    const res = await axios.put(`/api/recipe/like/${recipeId}`);
+    dispatch({
+      type: UPDATE_LIKES,
+      payload: { recipeId, likes: res.data}
+    })
+
+  }catch(err){
+    dispatch({
+      type: RECIPE_ERROR,
+      payload: null,
+    })
+  }
+};
+
+
+//Remove like 
+export const removeLike = (recipeId) => async dispatch => {
+  console.log(recipeId)
+  try {
+    const res = await axios.put(`/api/recipe/unlike/${recipeId}`);
+    dispatch({
+      type: UPDATE_LIKES,
+      payload: { recipeId, likes: res.data}
+    })
+
+  }catch(err){
+    dispatch({
+      type: RECIPE_ERROR,
+      payload: null,
+    })
+  }
+};
 
 
 

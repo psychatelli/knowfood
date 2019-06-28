@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
-import { addComment } from '../../actions/recipesAction';
+import { addComment, deleteComment } from '../../actions/recipesAction';
 
 class Comments extends Component {
 
@@ -34,8 +34,8 @@ class Comments extends Component {
     this.setState({ text: ''});
 }
 
-deleteComment() {
-
+deleteComment(commentId) {
+    this.props.deleteComment(this.props.param,commentId)
 }
 
 handleChange (e) {
@@ -52,7 +52,7 @@ const { Comment, param, Visibility} = this.props;
 const {text } = this.state;
 const { user } = this.props.auth;
 
-
+ 
 var CommentItems = Comment.map((item) => {
     return (
         <div className='Comment'>
@@ -65,7 +65,7 @@ var CommentItems = Comment.map((item) => {
 
                       <div>
                         <span className={Visibility}>
-                            <i onClick={this.deleteComment} className="material-icons gray_font Hand">close</i>
+                            <i onClick={() => { this.deleteComment(item._id)}} className="material-icons gray_font Hand">close</i>
                         </span>
                       </div>
                   </div>
@@ -94,5 +94,5 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
- export default connect(mapStateToProps, {addComment})(Comments);
+ export default connect(mapStateToProps, {addComment, deleteComment})(Comments);
 

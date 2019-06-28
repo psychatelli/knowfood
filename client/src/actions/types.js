@@ -39,4 +39,6 @@ export const LOGOUT = 'LOGOUT'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
+export const UPDATE_LIKES = 'UPDATE_LIKES'
+
 
