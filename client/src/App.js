@@ -14,7 +14,7 @@
   import setAuthToken from './utils/setAuthToken';
   import Register from './pages/auth/Register';
   import Login from './pages/auth/Login';
-  import Landing from './pages/landing';
+  // import Landing from './pages/landing';
   import Profiles from './pages/profiles';
   import Profile from './pages/profile';
 
@@ -38,9 +38,9 @@ const App = () => {
           <div>
             <Navbar/>
               <div className="Wrapper"> 
-                <Switch> 
+                {/* <Switch> 
                   <Route exact path="/" component={Landing} />
-                </Switch>
+                </Switch> */}
 
 
                 <Switch> 
